@@ -108,6 +108,17 @@ export async function action({request, context}) {
  */
 export async function loader({context}) {
   const {cart} = context;
+
+  if (!cart) {
+    return {
+      cart: {
+        id: 'empty',
+        lines: {nodes: []},
+        totalQuantity: 0,
+      },
+    };
+  }
+
   return await cart.get();
 }
 

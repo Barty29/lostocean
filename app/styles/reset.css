@@ -53,14 +53,15 @@ p {
 }
 
 a {
-  color: #000;
+  color: '#F9F9F9';
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+/* a:hover {
+  color: #403831;
   cursor: pointer;
-}
+  text-decoration: 'underline';
+} */
 
 hr {
   border-bottom: none;

@@ -3,6 +3,7 @@ import {useVariantUrl} from '~/lib/variants';
 import {Link} from 'react-router';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
+import TrashIcon from '~/assets/trash-icon2.svg';
 
 /**
  * A single line item in the cart. It displays the product image, title, price.
@@ -13,49 +14,89 @@ import {useAside} from './Aside';
  * }}
  */
 export function CartLineItem({layout, line}) {
-  const {id, merchandise} = line;
+  const {id, merchandise, isOptimistic} = line;
+
   const {product, title, image, selectedOptions} = merchandise;
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
   const {close} = useAside();
 
-  return (
-    <li key={id} className="cart-line">
-      {image && (
-        <Image
-          alt={title}
-          aspectRatio="1/1"
-          data={image}
-          height={100}
-          loading="lazy"
-          width={100}
-        />
-      )}
+  console.log('selectedOptions', selectedOptions);
+  console.log('merchandise', merchandise);
+  console.log('line', line);
 
-      <div>
-        <Link
-          prefetch="intent"
-          to={lineItemUrl}
-          onClick={() => {
-            if (layout === 'aside') {
-              close();
-            }
+  return (
+    <li key={id} className="cart-line" style={{width: '100%'}}>
+      {image && <Image alt={title} data={image} loading="lazy" width={110} />}
+
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
+      >
+        <span>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              // alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <Link
+              prefetch="intent"
+              to={lineItemUrl}
+              onClick={() => {
+                if (layout === 'aside') {
+                  close();
+                }
+              }}
+            >
+              <p>
+                <strong>{product.title}</strong>
+              </p>
+            </Link>
+
+            <CartLineRemoveButton lineIds={[id]} disabled={!!isOptimistic} />
+          </div>
+
+          <i
+            style={{
+              fontWeight: '200',
+              color: '#BFBFBF',
+              // lineHeight: 1,
+              fontSize: '14px',
+            }}
+          >
+            {product.description}
+          </i>
+          <p
+            style={{
+              fontWeight: '200',
+              color: '#BFBFBF',
+              // lineHeight: 1,
+              fontSize: '14px',
+            }}
+          >
+            {title}
+          </p>
+        </span>
+
+        {/* <ProductPrice price={line?.cost?.amountPerQuantity} />
+        <CartLineQuantity line={line} /> */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            // alignItems: 'center',
           }}
         >
-          <p>
-            <strong>{product.title}</strong>
-          </p>
-        </Link>
-        <ProductPrice price={line?.cost?.totalAmount} />
-        <ul>
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small>
-                {option.name}: {option.value}
-              </small>
-            </li>
-          ))}
-        </ul>
-        <CartLineQuantity line={line} />
+          <ProductPrice price={line?.cost?.amountPerQuantity} />
+          <CartLineQuantity line={line} />
+        </div>
       </div>
     </li>
   );
@@ -75,30 +116,39 @@ function CartLineQuantity({line}) {
 
   return (
     <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
           aria-label="Decrease quantity"
           disabled={quantity <= 1 || !!isOptimistic}
           name="decrease-quantity"
           value={prevQuantity}
+          style={{
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: '#f9f9f9',
+            cursor: 'pointer',
+          }}
         >
           <span>&#8722; </span>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
+      {quantity}
       <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
         <button
           aria-label="Increase quantity"
           name="increase-quantity"
           value={nextQuantity}
           disabled={!!isOptimistic}
+          style={{
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: '#f9f9f9',
+            cursor: 'pointer',
+          }}
         >
           <span>&#43;</span>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
-      <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
     </div>
   );
 }
@@ -120,8 +170,22 @@ function CartLineRemoveButton({lineIds, disabled}) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button disabled={disabled} type="submit">
-        Remove
+      <button
+        disabled={disabled}
+        type="submit"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          backgroundColor: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+        }}
+      >
+        <img
+          src={TrashIcon}
+          alt="trash-icon"
+          width="16px"
+          style={{margin: '0px'}}
+        />
       </button>
     </CartForm>
   );

@@ -11,9 +11,14 @@ export function CartSummary({cart, layout}) {
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
+      {/* <h4>Totals</h4> */}
+      {/* <div class="bone-divider">
+        <span class="bone-side left"></span>
+        <span class="bone-middle"></span>
+        <span class="bone-side right"></span>
+      </div> */}
       <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
+        <dt style={{fontWeight: '500'}}>Subtotal</dt>
         <dd>
           {cart?.cost?.subtotalAmount?.amount ? (
             <Money data={cart?.cost?.subtotalAmount} />
@@ -22,8 +27,19 @@ export function CartSummary({cart, layout}) {
           )}
         </dd>
       </dl>
-      <CartDiscounts discountCodes={cart?.discountCodes} />
-      <CartGiftCard giftCardCodes={cart?.appliedGiftCards} />
+      <p
+        style={{
+          fontWeight: '200',
+          color: '#BFBFBF',
+          // lineHeight: 1,
+          fontSize: '14px',
+        }}
+      >
+        Shipping & taxes calculated at checkout
+      </p>
+
+      {/* <CartDiscounts discountCodes={cart?.discountCodes} /> */}
+      {/* <CartGiftCard giftCardCodes={cart?.appliedGiftCards} /> */}
       <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
     </div>
   );
@@ -36,11 +52,15 @@ function CartCheckoutActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+    <div style={{marginTop: '24px'}}>
+      <a
+        href={checkoutUrl}
+        target="_self"
+        className="primary-button"
+        style={{width: '100%'}}
+      >
+        Checkout
       </a>
-      <br />
     </div>
   );
 }

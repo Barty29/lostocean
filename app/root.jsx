@@ -1,3 +1,6 @@
+// import {useEffect, useRef} from 'react';
+import {LocaleProvider} from './hooks/useLocale';
+
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -8,6 +11,7 @@ import {
   Scripts,
   ScrollRestoration,
   useRouteLoaderData,
+  useRevalidator,
 } from 'react-router';
 import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
@@ -146,7 +150,7 @@ export function Layout({children}) {
   const nonce = useNonce();
 
   return (
-    <html lang="en">
+    <html lang="en" data-turbo="false">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -169,19 +173,24 @@ export default function App() {
   const data = useRouteLoaderData('root');
 
   if (!data) {
-    return <Outlet />;
+    return;
+    <LocaleProvider>
+      <Outlet />
+    </LocaleProvider>;
   }
 
   return (
-    <Analytics.Provider
-      cart={data.cart}
-      shop={data.shop}
-      consent={data.consent}
-    >
-      <PageLayout {...data}>
-        <Outlet />
-      </PageLayout>
-    </Analytics.Provider>
+    <LocaleProvider>
+      <Analytics.Provider
+        cart={data.cart}
+        shop={data.shop}
+        consent={data.consent}
+      >
+        <PageLayout {...data}>
+          <Outlet />
+        </PageLayout>
+      </Analytics.Provider>
+    </LocaleProvider>
   );
 }
 

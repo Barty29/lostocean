@@ -51,12 +51,25 @@ async function loadCriticalData({context, params, request}) {
     throw new Error('Expected product handle to be defined');
   }
 
+  const i18n = storefront.i18n; // 👈 pridaj toto
+
   const [{product}] = await Promise.all([
     storefront.query(PRODUCT_QUERY, {
-      variables: {handle, selectedOptions: getSelectedProductOptions(request)},
+      variables: {
+        handle,
+        selectedOptions: getSelectedProductOptions(request),
+        language: i18n.language, // 👈 pridaj tieto dve
+        country: i18n.country, // 👈 pridaj tieto dve
+      },
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
+
+  // const [{product}] = await Promise.all([
+  //   storefront.query(PRODUCT_QUERY, {
+  //     variables: {handle, selectedOptions: getSelectedProductOptions(request)},
+  //   }),
+  //   // Add other queries here, so that they are loaded in parallel
+  // ]);
 
   if (!product?.id) {
     throw new Response(null, {status: 404});

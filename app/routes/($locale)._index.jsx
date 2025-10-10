@@ -3,6 +3,9 @@ import {Suspense} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
 
+// import {translations} from '~/lib/i18n';
+import {useLocale} from '../hooks/useLocale';
+
 /**
  * @type {Route.MetaFunction}
  */
@@ -20,7 +23,10 @@ export async function loader(args) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return {...deferredData, ...criticalData};
+  const {storefront} = args.context;
+  const locale = storefront.i18n;
+
+  return {...deferredData, ...criticalData, locale};
 }
 
 /**
@@ -29,8 +35,16 @@ export async function loader(args) {
  * @param {Route.LoaderArgs}
  */
 async function loadCriticalData({context}) {
+  const {storefront} = context;
+  const i18n = storefront.i18n; // 👈 získame aktuálny jazyk a krajinu
+
   const [{collections}] = await Promise.all([
-    context.storefront.query(FEATURED_COLLECTION_QUERY),
+    storefront.query(FEATURED_COLLECTION_QUERY, {
+      variables: {
+        country: i18n.country, // 👈 pridaj krajinu (napr. SK)
+        language: i18n.language, // 👈 pridaj jazyk (napr. SK)
+      },
+    }),
     // Add other queries here, so that they are loaded in parallel
   ]);
 
@@ -38,6 +52,16 @@ async function loadCriticalData({context}) {
     featuredCollection: collections.nodes[0],
   };
 }
+// async function loadCriticalData({context}) {
+//   const [{collections}] = await Promise.all([
+//     context.storefront.query(FEATURED_COLLECTION_QUERY),
+//     // Add other queries here, so that they are loaded in parallel
+//   ]);
+
+//   return {
+//     featuredCollection: collections.nodes[0],
+//   };
+// }
 
 /**
  * Load data for rendering content below the fold. This data is deferred and will be
@@ -46,8 +70,16 @@ async function loadCriticalData({context}) {
  * @param {Route.LoaderArgs}
  */
 function loadDeferredData({context}) {
-  const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
+  const {storefront} = context;
+  const i18n = storefront.i18n; // 👈 získame aktuálne locale (jazyk + krajina)
+
+  const recommendedProducts = storefront
+    .query(RECOMMENDED_PRODUCTS_QUERY, {
+      variables: {
+        country: i18n.country, // 👈 pridaj krajinu (napr. SK)
+        language: i18n.language, // 👈 pridaj jazyk (napr. SK)
+      },
+    })
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
       console.error(error);
@@ -58,14 +90,54 @@ function loadDeferredData({context}) {
     recommendedProducts,
   };
 }
+// function loadDeferredData({context}) {
+//   const recommendedProducts = context.storefront
+//     .query(RECOMMENDED_PRODUCTS_QUERY)
+//     .catch((error) => {
+//       // Log query errors, but don't throw them so the page can still render
+//       console.error(error);
+//       return null;
+//     });
+
+//   return {
+//     recommendedProducts,
+//   };
+// }
 
 export default function Homepage() {
   /** @type {LoaderReturnData} */
-  const data = useLoaderData();
+  // const data = useLoaderData();
+
+  const {t, language} = useLocale();
+
   return (
-    <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+    <div>
+      {/* <FeaturedCollection collection={data.featuredCollection} /> */}
+      {/* <RecommendedProducts products={data.recommendedProducts} /> */}
+      <div className="vertical-links">
+        <Link
+          prefetch="intent"
+          to="/collections/t-shirts"
+          style={{fontSize: '32px'}}
+        >
+          {t.label_shirt}
+        </Link>
+        <Link
+          prefetch="intent"
+          to="/collections/hoodies"
+          style={{fontSize: '32px'}}
+        >
+          {t.label_hoodie}
+        </Link>
+      </div>
+      {/* <div style={{display: 'flex'}}>
+        <div style={{width: '50%', backgroundColor: 'green', height: '200px'}}>
+          Test
+        </div>
+        <div style={{width: '50%', backgroundColor: 'pink', height: '200px'}}>
+          Test
+        </div>
+      </div> */}
     </div>
   );
 }

@@ -3,6 +3,8 @@ import {Link} from 'react-router';
 import {useAside} from '~/components/Aside';
 import {CartLineItem} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
+import CartLogo from '~/assets/CartLogo221.svg';
+// import CartLogo from '~/assets/CartLogo28.svg';
 
 /**
  * The main cart component that displays the cart items and summary.
@@ -13,6 +15,14 @@ export function CartMain({layout, cart: originalCart}) {
   // The useOptimisticCart hook applies pending actions to the cart
   // so the user immediately sees feedback when they modify the cart.
   const cart = useOptimisticCart(originalCart);
+
+  if (!cart || !cart.lines || cart.totalQuantity === 0) {
+    return (
+      <div className="cart-main">
+        <CartEmpty hidden={false} layout={layout} />
+      </div>
+    );
+  }
 
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
@@ -46,17 +56,42 @@ export function CartMain({layout, cart: originalCart}) {
  */
 function CartEmpty({hidden = false}) {
   const {close} = useAside();
+  if (hidden) return null;
+
   return (
     <div hidden={hidden}>
-      <br />
-      <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
-      </p>
-      <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
-        Continue shopping →
-      </Link>
+      <div
+        className="empty-cart"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '32px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '32px',
+          }}
+        >
+          <p style={{fontSize: '24px', color: '#f9f9f9'}}>
+            Your cart is empty.
+          </p>
+          <img src={CartLogo} alt="cart-logo" width="150px" />
+        </div>
+
+        <Link
+          to="/collections"
+          onClick={close}
+          prefetch="viewport"
+          style={{textTransform: 'uppercase', fontSize: '14px'}}
+        >
+          Continue shopping
+        </Link>
+      </div>
     </div>
   );
 }
