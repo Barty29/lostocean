@@ -7,24 +7,33 @@ const SimpleFooter = () => {
   return (
     <div className="footer-simple">
       <LanguageSwitcher />
-      <div
-        style={{
-          display: 'flex',
-          gap: '24px',
-          fontSize: '24px',
-          color: '#F9F9F9',
-        }}
-      >
-        <a href="" target="_blank" className="social-text">
+      <div className="footer-simple-social">
+        <a
+          href="https://www.instagram.com/lostoceanclth/"
+          target="_blank"
+          className="social-text"
+        >
           Instagram
         </a>
-        <a href="" target="_blank" className="social-text">
+        <a
+          href="https://www.instagram.com/lostoceanclth/"
+          target="_blank"
+          className="social-text"
+        >
           Facebook
         </a>
-        <a href="" target="_blank" className="social-icons">
+        <a
+          href="https://www.instagram.com/lostoceanclth/"
+          target="_blank"
+          className="social-icons"
+        >
           <img src={InstagramIcon} alt="instagram-icon" />
         </a>
-        <a href="" target="_blank" className="social-icons">
+        <a
+          href="https://www.instagram.com/lostoceanclth/"
+          target="_blank"
+          className="social-icons"
+        >
           <img src={FacebookIcon} alt="facebook-icon" />
         </a>
       </div>

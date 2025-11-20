@@ -19,14 +19,34 @@ export function CartLineItem({layout, line}) {
   const {product, title, image, selectedOptions} = merchandise;
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
   const {close} = useAside();
+  // const customImage = product.images.nodes[1];
+  const customImage =
+    product?.images?.nodes?.[1] ?? product?.image ?? merchandise?.image ?? null;
 
-  console.log('selectedOptions', selectedOptions);
+  // console.log('selectedOptions', selectedOptions);
   console.log('merchandise', merchandise);
-  console.log('line', line);
+  // console.log('line', line);
+
+  // const printType = selectedOptions.find((opt) => opt.name === 'print-type');
 
   return (
-    <li key={id} className="cart-line" style={{width: '100%'}}>
-      {image && <Image alt={title} data={image} loading="lazy" width={110} />}
+    <li
+      key={id}
+      className="cart-line"
+      style={{
+        width: '100%',
+        // borderBottom: layout === 'page' ? '1px solid #2e3c50' : 'none',
+      }}
+    >
+      {/* {image && (
+        <Image alt={title} data={customImage} loading="lazy" width={110} />
+      )} */}
+      {customImage ? (
+        <Image alt={title} data={customImage} loading="lazy" width={110} />
+      ) : (
+        <div style={{width: 110, height: 110, background: '#333'}} />
+      )}
+      {/* {image && <Image alt={title} data={image} loading="lazy" width={110} />} */}
 
       <div
         style={{
@@ -70,7 +90,7 @@ export function CartLineItem({layout, line}) {
               fontSize: '14px',
             }}
           >
-            {product.description}
+            {/* {printType.value} */}
           </i>
           <p
             style={{
@@ -94,7 +114,7 @@ export function CartLineItem({layout, line}) {
             // alignItems: 'center',
           }}
         >
-          <ProductPrice price={line?.cost?.amountPerQuantity} />
+          <ProductPrice price={line?.cost?.amountPerQuantity} view="cart" />
           <CartLineQuantity line={line} />
         </div>
       </div>

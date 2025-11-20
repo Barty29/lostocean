@@ -1,25 +1,22 @@
 import {CartForm, Money} from '@shopify/hydrogen';
 import {useEffect, useRef} from 'react';
 import {useFetcher} from 'react-router';
+import {Link} from 'react-router';
+import {useLocale} from '~/hooks/useLocale';
 
 /**
  * @param {CartSummaryProps}
  */
 export function CartSummary({cart, layout}) {
+  const {t} = useLocale();
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      {/* <h4>Totals</h4> */}
-      {/* <div class="bone-divider">
-        <span class="bone-side left"></span>
-        <span class="bone-middle"></span>
-        <span class="bone-side right"></span>
-      </div> */}
       <dl className="cart-subtotal">
-        <dt style={{fontWeight: '500'}}>Subtotal</dt>
-        <dd>
+        <dt style={{fontWeight: '500', fontSize: '24px'}}>{t.subtotal}</dt>
+        <dd style={{fontWeight: '500', fontSize: '24px'}}>
           {cart?.cost?.subtotalAmount?.amount ? (
             <Money data={cart?.cost?.subtotalAmount} />
           ) : (
@@ -35,12 +32,13 @@ export function CartSummary({cart, layout}) {
           fontSize: '14px',
         }}
       >
-        Shipping & taxes calculated at checkout
+        {t.shipping_info}
       </p>
 
       {/* <CartDiscounts discountCodes={cart?.discountCodes} /> */}
       {/* <CartGiftCard giftCardCodes={cart?.appliedGiftCards} /> */}
       <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
+      <CartContinueShopping checkoutUrl={cart?.checkoutUrl} />
     </div>
   );
 }
@@ -50,6 +48,7 @@ export function CartSummary({cart, layout}) {
  */
 function CartCheckoutActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
+  const {t} = useLocale();
 
   return (
     <div style={{marginTop: '24px'}}>
@@ -59,8 +58,26 @@ function CartCheckoutActions({checkoutUrl}) {
         className="primary-button"
         style={{width: '100%'}}
       >
-        Checkout
+        {t.checkout}
       </a>
+    </div>
+  );
+}
+function CartContinueShopping({checkoutUrl}) {
+  if (!checkoutUrl) return null;
+
+  const {t, language} = useLocale();
+
+  return (
+    <div style={{marginTop: '24px'}}>
+      <Link
+        to={`/${language}/catalog`}
+        target="_self"
+        className="primary-button secondary-button"
+        style={{width: '100%'}}
+      >
+        {t.continue_shoping}
+      </Link>
     </div>
   );
 }

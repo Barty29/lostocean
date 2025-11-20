@@ -1,6 +1,8 @@
 import {useLoaderData} from 'react-router';
 import {Image} from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import Breadcrumbs from '~/components/Breadcrumbs';
+import {useLocale} from '~/hooks/useLocale';
 
 /**
  * @type {Route.MetaFunction}
@@ -84,7 +86,7 @@ export default function Article() {
   }).format(new Date(article.publishedAt));
 
   return (
-    <div className="article">
+    <div className="article" style={{marginTop: '132px'}}>
       <h1>
         {title}
         <div>

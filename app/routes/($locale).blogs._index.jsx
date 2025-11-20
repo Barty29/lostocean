@@ -1,6 +1,8 @@
 import {Link, useLoaderData} from 'react-router';
 import {getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import Breadcrumbs from '~/components/Breadcrumbs';
+import {useLocale} from '~/hooks/useLocale';
 
 /**
  * @type {Route.MetaFunction}
@@ -56,26 +58,56 @@ function loadDeferredData({context}) {
 
 export default function Blogs() {
   /** @type {LoaderReturnData} */
+  const {t, language} = useLocale();
   const {blogs} = useLoaderData();
 
   return (
-    <div className="blogs">
-      <h1>Blogs</h1>
-      <div className="blogs-grid">
-        <PaginatedResourceSection connection={blogs}>
-          {({node: blog}) => (
-            <Link
-              className="blog"
-              key={blog.handle}
-              prefetch="intent"
-              to={`/blogs/${blog.handle}`}
-            >
-              <h2>{blog.title}</h2>
-            </Link>
-          )}
-        </PaginatedResourceSection>
+    <div className="layout-padding">
+      <div className="product-list-header">
+        <Breadcrumbs
+          links={[
+            {label: 'Home', labelSk: 'Domov', to: `/${language}`},
+            {
+              label: 'Blogs',
+              labelSk: 'Blogy',
+              to: `${language}/blogs`,
+            },
+          ]}
+        />
+        <h1>Blogs</h1>
+        <div className="blogs-grid">
+          <PaginatedResourceSection connection={blogs}>
+            {({node: blog}) => (
+              <Link
+                className="blog"
+                key={blog.handle}
+                prefetch="intent"
+                to={`/blogs/${blog.handle}`}
+              >
+                <h2>{blog.title}</h2>
+              </Link>
+            )}
+          </PaginatedResourceSection>
+        </div>
       </div>
     </div>
+    // <div className="blogs" style={{marginTop: '132px'}}>
+    //   <h1>Blogs</h1>
+    //   <div className="blogs-grid">
+    //     <PaginatedResourceSection connection={blogs}>
+    //       {({node: blog}) => (
+    //         <Link
+    //           className="blog"
+    //           key={blog.handle}
+    //           prefetch="intent"
+    //           to={`/blogs/${blog.handle}`}
+    //         >
+    //           <h2>{blog.title}</h2>
+    //         </Link>
+    //       )}
+    //     </PaginatedResourceSection>
+    //   </div>
+    // </div>
   );
 }
 

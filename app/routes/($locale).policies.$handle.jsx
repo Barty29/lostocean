@@ -1,4 +1,6 @@
 import {Link, useLoaderData} from 'react-router';
+import {useLocale} from '~/hooks/useLocale';
+import Breadcrumbs from '~/components/Breadcrumbs';
 
 /**
  * @type {Route.MetaFunction}
@@ -42,17 +44,27 @@ export async function loader({params, context}) {
 export default function Policy() {
   /** @type {LoaderReturnData} */
   const {policy} = useLoaderData();
+  const {t, language} = useLocale();
 
   return (
-    <div className="policy">
-      <br />
-      <br />
-      <div>
-        <Link to="/policies">← Back to Policies</Link>
+    <div className="layout-padding">
+      <div className="product-list-header">
+        {/* <div>
+          <Link to="/policies">← Back to Policies</Link>
+        </div> */}
+        <Breadcrumbs
+          links={[
+            {label: 'Home', labelSk: 'Domov', to: `/${language}`},
+            {
+              label: 'Privacy Policy',
+              labelSk: 'Ochrana osobných údajov',
+              to: `${language}/policies/privacy-policy`,
+            },
+          ]}
+        />
+        <h1>{policy.title}</h1>
+        <div dangerouslySetInnerHTML={{__html: policy.body}} />
       </div>
-      <br />
-      <h1>{policy.title}</h1>
-      <div dangerouslySetInnerHTML={{__html: policy.body}} />
     </div>
   );
 }

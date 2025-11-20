@@ -46,10 +46,10 @@ export function Aside({children, heading, type}) {
       <button className="close-outside" onClick={close} />
       <aside>
         <header>
-          <h3>{heading}</h3>
-          <button className="close reset" onClick={close}>
+          {/* <h3>{heading}</h3> */}
+          {/* <button className="close reset" onClick={close}>
             <img src={CloseIcon} alt="close-icon" width="32px" />
-          </button>
+          </button> */}
         </header>
         <main style={{height: '100%', boxSizing: 'border-box'}}>
           {children}

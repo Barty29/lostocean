@@ -19,7 +19,7 @@ export function ProductForm({productOptions, selectedVariant}) {
 
         return (
           <div className="product-options" key={option.name}>
-            <h5>{option.name}</h5>
+            {/* <h5>{option.name}</h5> */}
             <div className="product-options-grid">
               {option.optionValues.map((value) => {
                 const {
@@ -70,10 +70,13 @@ export function ProductForm({productOptions, selectedVariant}) {
                       }`}
                       key={option.name + name}
                       style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
+                        fontSize: '24px',
+                        minWidth: '40px',
+                        backgroundColor: selected ? '#2e3c50' : 'transparent',
+                        color: selected ? '#f9f9f9' : 'rgb(191, 191, 191)',
+                        borderRadius: '100px',
                         opacity: available ? 1 : 0.3,
+                        border: 'none',
                       }}
                       disabled={!exists}
                       onClick={() => {
@@ -91,15 +94,19 @@ export function ProductForm({productOptions, selectedVariant}) {
                 }
               })}
             </div>
-            <br />
           </div>
         );
       })}
+      {/* <div className="product-status">
+        <span className="status-dot"></span>
+        IN STOCK, READY TO SHIP
+      </div> */}
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
           open('cart');
         }}
+        isAvailable={selectedVariant?.availableForSale}
         lines={
           selectedVariant
             ? [

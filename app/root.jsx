@@ -18,6 +18,7 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from './components/PageLayout';
+import {useLocation} from 'react-router';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -156,6 +157,17 @@ export function Layout({children}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+
         <Meta />
         <Links />
       </head>
@@ -169,18 +181,23 @@ export function Layout({children}) {
 }
 
 export default function App() {
-  /** @type {RootLoader} */
   const data = useRouteLoaderData('root');
+  const {pathname} = useLocation();
+
+  // získa prefix /sk/... alebo /en/...
+  const prefix = pathname.split('/')[1];
+  const currentLang = ['sk', 'en'].includes(prefix) ? prefix : 'en';
 
   if (!data) {
-    return;
-    <LocaleProvider>
-      <Outlet />
-    </LocaleProvider>;
+    return (
+      <LocaleProvider initialLanguage={currentLang}>
+        <Outlet />
+      </LocaleProvider>
+    );
   }
 
   return (
-    <LocaleProvider>
+    <LocaleProvider initialLanguage={currentLang}>
       <Analytics.Provider
         cart={data.cart}
         shop={data.shop}
@@ -193,6 +210,32 @@ export default function App() {
     </LocaleProvider>
   );
 }
+
+// export default function App() {
+//   /** @type {RootLoader} */
+//   const data = useRouteLoaderData('root');
+
+//   if (!data) {
+//     return;
+//     <LocaleProvider>
+//       <Outlet />
+//     </LocaleProvider>;
+//   }
+
+//   return (
+//     <LocaleProvider>
+//       <Analytics.Provider
+//         cart={data.cart}
+//         shop={data.shop}
+//         consent={data.consent}
+//       >
+//         <PageLayout {...data}>
+//           <Outlet />
+//         </PageLayout>
+//       </Analytics.Provider>
+//     </LocaleProvider>
+//   );
+// }
 
 export function ErrorBoundary() {
   const error = useRouteError();

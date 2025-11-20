@@ -1,7 +1,8 @@
-import {useLoaderData} from 'react-router';
+import {useLoaderData, Link} from 'react-router';
 import {getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
+import {useLocale} from '~/hooks/useLocale';
 
 /**
  * @type {Route.MetaFunction}
@@ -31,7 +32,7 @@ export async function loader(args) {
 async function loadCriticalData({context, request}) {
   const {storefront} = context;
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 8,
+    pageBy: 100,
   });
 
   const [{products}] = await Promise.all([
@@ -56,10 +57,29 @@ function loadDeferredData({context}) {
 export default function Collection() {
   /** @type {LoaderReturnData} */
   const {products} = useLoaderData();
+  const {t, language} = useLocale();
 
+  // preč collection className
   return (
-    <div className="collection">
-      <h1>Products</h1>
+    <div className="layout-padding">
+      <div className="product-list-header">
+        <p className="breadcrumbs">Home / Catalog</p>
+        <div>
+          <h1>Into the Deep collection</h1>
+          <p style={{marginTop: '8px'}}>
+            Discover our first collection inspired by the ocean, tattoos, wild
+            nature, and wicca. The beginning of the Lost Ocean story starts
+            here.
+          </p>
+        </div>
+        <div className="filter">
+          <FilterBox label="All" url="catalog" active={true} />
+          <FilterBox label="T-shirts" url="t-shirts" />
+          <FilterBox label="Hoodies" url="hoodies" />
+          <FilterBox label="Accessories" url="accessories" />
+        </div>
+      </div>
+      <hr className="divider" />
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"
@@ -68,13 +88,28 @@ export default function Collection() {
           <ProductItem
             key={product.id}
             product={product}
-            loading={index < 8 ? 'eager' : undefined}
+            loading={index < 100 ? 'eager' : undefined}
           />
         )}
       </PaginatedResourceSection>
     </div>
   );
 }
+
+const FilterBox = ({label, active, url}) => {
+  const {language} = useLocale();
+
+  const fullUrl =
+    url === 'catalog' ? `/${language}/catalog` : `/${language}/catalog/${url}`;
+
+  const className = active ? 'filter-box--active' : 'filter-box';
+
+  return (
+    <Link to={fullUrl} className={className}>
+      <h3>{label}</h3>
+    </Link>
+  );
+};
 
 const COLLECTION_ITEM_FRAGMENT = `#graphql
   fragment MoneyCollectionItem on MoneyV2 {

@@ -35,7 +35,7 @@ export function PageLayout({
         />
       )}
       <main>{children}</main>
-      <SimpleFooter />
+      {/* <SimpleFooter /> */}
       {/* <Footer
         footer={footer}
         header={header}

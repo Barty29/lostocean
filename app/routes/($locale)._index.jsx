@@ -4,7 +4,8 @@ import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
 
 // import {translations} from '~/lib/i18n';
-import {useLocale} from '../hooks/useLocale';
+import {useLocale} from '~/hooks/useLocale';
+import SimpleFooter from '~/components/SimpleFooter';
 
 /**
  * @type {Route.MetaFunction}
@@ -111,33 +112,58 @@ export default function Homepage() {
   const {t, language} = useLocale();
 
   return (
-    <div>
+    <div className="home-page">
+      <div className="layout-padding home-page-layout">
+        <div className="home-content-box">
+          <h1 style={{fontSize: '56px'}}>{t.home_heading}</h1>
+          <p style={{marginTop: '8px', color: 'rgb(191, 191, 191)'}}>
+            {t.home_text}
+          </p>
+          <div className="home-links-container">
+            <Link
+              to={`/${language}/catalog`}
+              className="primary-button hp-link"
+            >
+              {t.shop_now}
+            </Link>
+            <Link
+              to={`/${language}/about-us`}
+              className="primary-button hp-link"
+            >
+              {t.about_us}
+            </Link>
+          </div>
+        </div>
+        <div className="vertical-links">
+          <Link
+            prefetch="intent"
+            to={`/${language}/catalog`}
+            style={{fontSize: '32px'}}
+          >
+            {t.shop_now}
+          </Link>
+          <Link
+            prefetch="intent"
+            to={`/${language}/about-us`}
+            style={{fontSize: '32px'}}
+          >
+            {t.about_us}
+          </Link>
+        </div>
+        {/* <div className="home-button">
+          <Link
+            className="primary-button"
+            prefetch="intent"
+            to={`/${language}/catalog`}
+            style={{fontSize: '32px'}}
+          >
+            {t.shop_now}
+          </Link>
+        </div> */}
+        <SimpleFooter />
+      </div>
       {/* <FeaturedCollection collection={data.featuredCollection} /> */}
       {/* <RecommendedProducts products={data.recommendedProducts} /> */}
-      <div className="vertical-links">
-        <Link
-          prefetch="intent"
-          to="/collections/t-shirts"
-          style={{fontSize: '32px'}}
-        >
-          {t.label_shirt}
-        </Link>
-        <Link
-          prefetch="intent"
-          to="/collections/hoodies"
-          style={{fontSize: '32px'}}
-        >
-          {t.label_hoodie}
-        </Link>
-      </div>
-      {/* <div style={{display: 'flex'}}>
-        <div style={{width: '50%', backgroundColor: 'green', height: '200px'}}>
-          Test
-        </div>
-        <div style={{width: '50%', backgroundColor: 'pink', height: '200px'}}>
-          Test
-        </div>
-      </div> */}
     </div>
   );
 }
@@ -147,50 +173,51 @@ export default function Homepage() {
  *   collection: FeaturedCollectionFragment;
  * }}
  */
-function FeaturedCollection({collection}) {
-  if (!collection) return null;
-  const image = collection?.image;
-  return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
-  );
-}
+// function FeaturedCollection({collection}) {
+//   if (!collection) return null;
+//   const image = collection?.image;
+//   return (
+//     <Link
+//       className="featured-collection"
+//       to={`/collections/${collection.handle}`}
+//     >
+//       {image && (
+//         <div className="featured-collection-image">
+//           <Image data={image} sizes="100vw" />
+//         </div>
+//       )}
+//       <h1>{collection.title}</h1>
+//     </Link>
+//   );
+// }
 
 /**
  * @param {{
  *   products: Promise<RecommendedProductsQuery | null>;
  * }}
  */
-function RecommendedProducts({products}) {
-  return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {(response) => (
-            <div className="recommended-products-grid">
-              {response
-                ? response.products.nodes.map((product) => (
-                    <ProductItem key={product.id} product={product} />
-                  ))
-                : null}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <br />
-    </div>
-  );
-}
+
+// function RecommendedProducts({products}) {
+//   return (
+//     <div className="recommended-products">
+//       <h2>Recommended Products</h2>
+//       <Suspense fallback={<div>Loading...</div>}>
+//         <Await resolve={products}>
+//           {(response) => (
+//             <div className="recommended-products-grid">
+//               {response
+//                 ? response.products.nodes.map((product) => (
+//                     <ProductItem key={product.id} product={product} />
+//                   ))
+//                 : null}
+//             </div>
+//           )}
+//         </Await>
+//       </Suspense>
+//       <br />
+//     </div>
+//   );
+// }
 
 const FEATURED_COLLECTION_QUERY = `#graphql
   fragment FeaturedCollection on Collection {

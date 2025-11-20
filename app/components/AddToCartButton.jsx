@@ -14,6 +14,7 @@ export function AddToCartButton({
   children,
   disabled,
   lines,
+  isAvailable,
   onClick,
 }) {
   return (
@@ -26,6 +27,13 @@ export function AddToCartButton({
             value={JSON.stringify(analytics)}
           />
           <button
+            className={
+              isAvailable ? 'primary-button' : 'primary-button--disabled'
+            }
+            style={{
+              marginTop: '24px',
+              cursor: isAvailable ? 'pointer' : 'auto',
+            }}
             type="submit"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}

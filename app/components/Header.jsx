@@ -1,11 +1,13 @@
 import {Suspense} from 'react';
-import {Await, NavLink, useAsyncValue} from 'react-router';
+import {Await, NavLink, useAsyncValue, useLocation} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
+import {useLocale} from '~/hooks/useLocale';
 
 import Logo from '../assets/lost-ocean-logo.svg';
 import LogoText from '../assets/lost-ocean-logo-text.svg';
-import Hamburger from '../assets/hamburger.svg';
+import HamburgerIcon from '../assets/hamburger.svg';
+import CloseIcon from '../assets/close-icon.svg';
 import Bag from '../assets/bag.svg';
 
 /**
@@ -13,25 +15,30 @@ import Bag from '../assets/bag.svg';
  */
 export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
   const {open} = useAside();
+  const {language} = useLocale();
+  const {pathname} = useLocation();
+
   const {shop, menu} = header;
 
+  const isHome =
+    pathname === '/sk' ||
+    pathname === '/sk/' ||
+    pathname === '/en' ||
+    pathname === '/en/';
+
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" end>
+    <header className={isHome ? 'header header-home' : 'header header-page'}>
+      <NavLink prefetch="intent" to={`/${language}`} end>
         <img src={Logo} alt="logo" />
       </NavLink>
-      {/* TODO center */}
-      <NavLink prefetch="intent" to="/" end className="header-logo-text">
+      <NavLink
+        prefetch="intent"
+        to={`/${language}`}
+        end
+        className="header-logo-text"
+      >
         <img src={LogoText} alt="logo-text" />
       </NavLink>
-
-      {/* TODO MENU BOČNÉ */}
-      {/* <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      /> */}
       <div>
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </div>
@@ -47,14 +54,27 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
  *   publicStoreDomain: HeaderProps['publicStoreDomain'];
  * }}
  */
-export function HeaderMenu({
-  menu,
-  primaryDomainUrl,
-  viewport,
-  publicStoreDomain,
-}) {
-  const className = `header-menu-${viewport}`;
+
+const navLinks = [
+  {id: '01', url: '', labelEN: 'Home', labelSK: 'Domov'},
+  {id: '02', url: 'catalog', labelEN: 'Catalog', labelSK: 'Katalóg'},
+  {id: '03', url: 'cart', labelEN: 'Cart', labelSK: 'Košík'},
+  {id: 'hr1', type: 'hr'},
+  {id: '04', url: 'about-us', labelEN: 'About us', labelSK: 'O nás'},
+  {id: '05', url: 'blogs', labelEN: 'Blog', labelSK: 'Blog'},
+  {id: '06', url: 'faq', labelEN: "FAQ's", labelSK: 'FAQ'},
+  {id: '07', url: 'contact', labelEN: 'Contact', labelSK: 'Kontakt'},
+  {id: 'hr2', type: 'hr'},
+  {
+    id: '08',
+    url: 'policies/privacy-policy',
+    labelEN: 'Privacy Policy',
+    labelSK: 'Ochrana osobných údajov',
+  },
+];
+export function HeaderMenu({menu, primaryDomainUrl, publicStoreDomain}) {
   const {close} = useAside();
+  const {t, language} = useLocale();
 
   return (
     <nav
@@ -75,110 +95,25 @@ export function HeaderMenu({
           gap: '1rem',
         }}
       >
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="/"
-        >
-          Home
-        </NavLink>
+        {navLinks.map((item) => {
+          const label = language === 'sk' ? item.labelSK : item.labelEN;
+          const urlPrefix = language === 'sk' ? 'sk' : 'en';
 
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="/collections/all"
-        >
-          Products
-        </NavLink>
-
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="/cart"
-        >
-          Cart
-        </NavLink>
-
-        <BoneDivider />
-
-        {/* <NavLink
-        className="header-menu-item"
-        end
-        onClick={close}
-        prefetch="intent"
-        // style={activeLinkStyle}
-        to="/collections"
-      >
-        Collections
-      </NavLink> */}
-
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="/pages/about-us"
-        >
-          About us
-        </NavLink>
-
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="/blogs"
-        >
-          Blog
-        </NavLink>
-
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="/blogs"
-        >
-          FAQ
-        </NavLink>
-
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="/blogs"
-        >
-          Contact
-        </NavLink>
-
-        <BoneDivider />
-
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="/policies/privacy-policy"
-        >
-          Privacy policy
-        </NavLink>
-
-        <BoneDivider />
+          return item.type === 'hr' ? (
+            <hr key={item.id} className="divider-primary" />
+          ) : (
+            <NavLink
+              key={item.id}
+              className="header-menu-item"
+              end
+              onClick={close}
+              prefetch="intent"
+              to={`/${urlPrefix}/${item.url}`}
+            >
+              {label}
+            </NavLink>
+          );
+        })}
       </div>
 
       <div
@@ -194,7 +129,7 @@ export function HeaderMenu({
           onClick={close}
           prefetch="intent"
           // style={activeLinkStyle}
-          to="/policies/privacy-policy"
+          to="https://www.instagram.com/lostoceanclth/"
         >
           Instagram
         </NavLink>
@@ -205,7 +140,7 @@ export function HeaderMenu({
           onClick={close}
           prefetch="intent"
           // style={activeLinkStyle}
-          to="/policies/privacy-policy"
+          to="https://www.instagram.com/lostoceanclth/"
         >
           Facebook
         </NavLink>
@@ -214,29 +149,10 @@ export function HeaderMenu({
   );
 }
 
-const BoneDivider = () => {
-  return (
-    <hr
-      style={{
-        border: 'none',
-        height: '1px',
-        backgroundColor: '#4d433b',
-        margin: '8px 0px',
-      }}
-    />
-    // <div class="bone-divider">
-    //   <span class="bone-side left"></span>
-    //   <span class="bone-middle"></span>
-    //   <span class="bone-side right"></span>
-    // </div>
-  );
-};
-
 /**
  * @param {Pick<HeaderProps, 'isLoggedIn' | 'cart'>}
  */
 
-// EDIT
 function HeaderCtas({isLoggedIn, cart}) {
   const {open} = useAside();
   return (
@@ -248,7 +164,10 @@ function HeaderCtas({isLoggedIn, cart}) {
 }
 
 function HeaderMenuMobileToggle() {
-  const {open} = useAside();
+  const {open, close, type} = useAside();
+
+  const iconSrc = type === 'closed' ? HamburgerIcon : CloseIcon;
+
   return (
     <button
       style={{
@@ -256,21 +175,21 @@ function HeaderMenuMobileToggle() {
         border: 'none',
         cursor: 'pointer',
       }}
-      onClick={() => open('mobile')}
+      onClick={type === 'closed' ? () => open('mobile') : close}
     >
-      <img src={Hamburger} alt="hamburger-icon" />
+      <img src={iconSrc} alt="hamburger-icon" width="38px" />
     </button>
   );
 }
 
-function SearchToggle() {
-  const {open} = useAside();
-  return (
-    <button className="reset" onClick={() => open('search')}>
-      Search
-    </button>
-  );
-}
+// function SearchToggle() {
+//   const {open} = useAside();
+//   return (
+//     <button className="reset" onClick={() => open('search')}>
+//       Search
+//     </button>
+//   );
+// }
 
 /**
  * @param {{count: number | null}}
@@ -303,36 +222,7 @@ function CartBadge({count}) {
       {count === null ? (
         <span>&nbsp;</span>
       ) : (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            WebkitBoxPack: 'center',
-            justifyContent: 'center',
-            alignContent: 'center',
-            WebkitBoxAlign: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            boxSizing: 'border-box',
-            fontWeight: 500,
-            minWidth: '20px',
-            lineHeight: 1,
-            height: '20px',
-            zIndex: 1,
-            backgroundColor: '#4D433B',
-            color: '#F9F9F9',
-            top: '0px',
-            right: '0px',
-            transform: 'scale(1) translate(50%, -50%)',
-            transformOrigin: '100% 0%',
-            padding: '0px 6px',
-            borderRadius: '10px',
-            transition: 'transform 225ms cubic-bezier(0.4, 0, 0.2, 1)',
-          }}
-        >
-          {count}
-        </div>
+        <div className="badge">{count}</div>
       )}
     </a>
   );

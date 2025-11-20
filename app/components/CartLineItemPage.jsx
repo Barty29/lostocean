@@ -1,0 +1,230 @@
+import {CartForm, Image} from '@shopify/hydrogen';
+import {useVariantUrl} from '~/lib/variants';
+import {Link} from 'react-router';
+import {ProductPrice} from './ProductPrice';
+import {useAside} from './Aside';
+import TrashIcon from '~/assets/trash-icon2.svg';
+
+/**
+ * A single line item in the cart. It displays the product image, title, price.
+ * It also provides controls to update the quantity or remove the line item.
+ * @param {{
+ *   layout: CartLayout;
+ *   line: CartLine;
+ * }}
+ */
+export function CartLineItemPage({layout, line}) {
+  const {id, merchandise, isOptimistic} = line;
+
+  const {product, title, image, selectedOptions} = merchandise;
+  const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
+  const {close} = useAside();
+  // const customImage = product.images.nodes[1];
+  const customImage =
+    product?.images?.nodes?.[1] ?? product?.image ?? merchandise?.image ?? null;
+
+  // console.log('selectedOptions', selectedOptions);
+  console.log('merchandise', merchandise);
+  // console.log('line', line);
+
+  // const printType = selectedOptions.find((opt) => opt.name === 'print-type');
+
+  return (
+    <li
+      key={id}
+      className="cart-line"
+      style={{
+        width: '100%',
+        borderBottom: layout === 'page' ? '1px solid #242424' : 'none',
+        marginBottom: '0px',
+      }}
+    >
+      {/* {image && (
+        <Image alt={title} data={customImage} loading="lazy" width={110} />
+      )} */}
+
+      {customImage ? (
+        <Image alt={title} data={customImage} loading="lazy" width={110} />
+      ) : (
+        <div style={{width: 110, height: 110, background: '#333'}} />
+      )}
+
+      {/* {image && <Image alt={title} data={image} loading="lazy" width={110} />} */}
+
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          //   flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+            <Link
+              prefetch="intent"
+              to={lineItemUrl}
+              onClick={() => {
+                if (layout === 'aside') {
+                  close();
+                }
+              }}
+            >
+              <p>
+                <strong>{product.title}</strong>
+              </p>
+            </Link>
+            <p
+              style={{
+                fontWeight: '200',
+                color: '#BFBFBF',
+                // lineHeight: 1,
+                fontSize: '14px',
+              }}
+            >
+              {title}
+            </p>
+          </div>
+
+          <CartLineQuantity line={line} />
+        </div>
+
+        <div style={{display: 'flex', gap: '16px'}}>
+          <strong>
+            <ProductPrice price={line?.cost?.amountPerQuantity} view="cart" />
+          </strong>
+          <CartLineRemoveButton lineIds={[id]} disabled={!!isOptimistic} />
+        </div>
+      </div>
+    </li>
+  );
+}
+
+/**
+ * Provides the controls to update the quantity of a line item in the cart.
+ * These controls are disabled when the line item is new, and the server
+ * hasn't yet responded that it was successfully added to the cart.
+ * @param {{line: CartLine}}
+ */
+function CartLineQuantity({line}) {
+  if (!line || typeof line?.quantity === 'undefined') return null;
+  const {id: lineId, quantity, isOptimistic} = line;
+  const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
+  const nextQuantity = Number((quantity + 1).toFixed(0));
+
+  return (
+    <div className="cart-line-quantity">
+      <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
+        <button
+          aria-label="Decrease quantity"
+          disabled={quantity <= 1 || !!isOptimistic}
+          name="decrease-quantity"
+          value={prevQuantity}
+          style={{
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: '#f9f9f9',
+            cursor: 'pointer',
+          }}
+        >
+          <span>&#8722; </span>
+        </button>
+      </CartLineUpdateButton>
+      {quantity}
+      <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
+        <button
+          aria-label="Increase quantity"
+          name="increase-quantity"
+          value={nextQuantity}
+          disabled={!!isOptimistic}
+          style={{
+            backgroundColor: 'transparent',
+            border: 'none',
+            color: '#f9f9f9',
+            cursor: 'pointer',
+          }}
+        >
+          <span>&#43;</span>
+        </button>
+      </CartLineUpdateButton>
+    </div>
+  );
+}
+
+/**
+ * A button that removes a line item from the cart. It is disabled
+ * when the line item is new, and the server hasn't yet responded
+ * that it was successfully added to the cart.
+ * @param {{
+ *   lineIds: string[];
+ *   disabled: boolean;
+ * }}
+ */
+function CartLineRemoveButton({lineIds, disabled}) {
+  return (
+    <CartForm
+      fetcherKey={getUpdateKey(lineIds)}
+      route="/cart"
+      action={CartForm.ACTIONS.LinesRemove}
+      inputs={{lineIds}}
+    >
+      <button
+        disabled={disabled}
+        type="submit"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          backgroundColor: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+        }}
+      >
+        <img
+          src={TrashIcon}
+          alt="trash-icon"
+          width="16px"
+          style={{margin: '0px'}}
+        />
+      </button>
+    </CartForm>
+  );
+}
+
+/**
+ * @param {{
+ *   children: React.ReactNode;
+ *   lines: CartLineUpdateInput[];
+ * }}
+ */
+function CartLineUpdateButton({children, lines}) {
+  const lineIds = lines.map((line) => line.id);
+
+  return (
+    <CartForm
+      fetcherKey={getUpdateKey(lineIds)}
+      route="/cart"
+      action={CartForm.ACTIONS.LinesUpdate}
+      inputs={{lines}}
+    >
+      {children}
+    </CartForm>
+  );
+}
+
+/**
+ * Returns a unique key for the update action. This is used to make sure actions modifying the same line
+ * items are not run concurrently, but cancel each other. For example, if the user clicks "Increase quantity"
+ * and "Decrease quantity" in rapid succession, the actions will cancel each other and only the last one will run.
+ * @returns
+ * @param {string[]} lineIds - line ids affected by the update
+ */
+function getUpdateKey(lineIds) {
+  return [CartForm.ACTIONS.LinesUpdate, ...lineIds].join('-');
+}
+
+/** @typedef {OptimisticCartLine<CartApiQueryFragment>} CartLine */
+
+/** @typedef {import('@shopify/hydrogen/storefront-api-types').CartLineUpdateInput} CartLineUpdateInput */
+/** @typedef {import('~/components/CartMain').CartLayout} CartLayout */
+/** @typedef {import('@shopify/hydrogen').OptimisticCartLine} OptimisticCartLine */
+/** @typedef {import('storefrontapi.generated').CartApiQueryFragment} CartApiQueryFragment */

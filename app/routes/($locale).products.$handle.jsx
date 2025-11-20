@@ -10,6 +10,7 @@ import {
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import {Gallery} from '~/components/Gallery';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
 /**
@@ -118,29 +119,54 @@ export default function Product() {
 
   const {title, descriptionHtml} = product;
 
+  const printType = selectedVariant?.selectedOptions.find(
+    (opt) => opt.name === 'print-type',
+  );
+
+  // TODO LOCALE, vratit 0 / 1 a podla toho if ?
+  let printTypeLabel = printType ? printType.value : '';
+
   return (
     <div className="product">
-      <ProductImage image={selectedVariant?.image} />
-      <div className="product-main">
-        <h1>{title}</h1>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
-        />
-        <br />
-        <ProductForm
-          productOptions={productOptions}
-          selectedVariant={selectedVariant}
-        />
-        <br />
-        <br />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
+      {/* <ProductImage image={selectedVariant?.image} /> */}
+      <Gallery images={product.images.nodes} />
+      <div className="product-wrapper">
+        <div className="product-main">
+          <div>
+            <h1>{title}</h1>
+            <p style={{marginTop: '8px', color: 'rgb(191, 191, 191)'}}>
+              {printTypeLabel}
+            </p>
+          </div>
+          <ProductPrice
+            price={selectedVariant?.price}
+            compareAtPrice={selectedVariant?.compareAtPrice}
+          />
+          <ProductForm
+            productOptions={productOptions}
+            selectedVariant={selectedVariant}
+          />
+
+          <div
+            style={{color: 'rgb(191, 191, 191)'}}
+            dangerouslySetInnerHTML={{__html: descriptionHtml}}
+          />
+          <hr className="divider-primary" />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              fontWeight: '500',
+              cursor: 'pointer',
+            }}
+          >
+            <p>Size guide</p>
+            <p>Delivery & Shipping Protection | Returns</p>
+          </div>
+        </div>
       </div>
+
       <Analytics.ProductView
         data={{
           products: [
@@ -229,6 +255,15 @@ const PRODUCT_FRAGMENT = `#graphql
     }
     adjacentVariants (selectedOptions: $selectedOptions) {
       ...ProductVariant
+    }
+    images(first: 10) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
     }
     seo {
       description

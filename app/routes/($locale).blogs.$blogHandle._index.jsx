@@ -2,6 +2,8 @@ import {Link, useLoaderData} from 'react-router';
 import {Image, getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import Breadcrumbs from '~/components/Breadcrumbs';
+import {useLocale} from '~/hooks/useLocale';
 
 /**
  * @type {Route.MetaFunction}
@@ -68,22 +70,35 @@ function loadDeferredData({context}) {
 
 export default function Blog() {
   /** @type {LoaderReturnData} */
+  const {t, language} = useLocale();
   const {blog} = useLoaderData();
   const {articles} = blog;
 
   return (
-    <div className="blog">
-      <h1>{blog.title}</h1>
-      <div className="blog-grid">
-        <PaginatedResourceSection connection={articles}>
-          {({node: article, index}) => (
-            <ArticleItem
-              article={article}
-              key={article.id}
-              loading={index < 2 ? 'eager' : 'lazy'}
-            />
-          )}
-        </PaginatedResourceSection>
+    <div className="layout-padding">
+      <div className="product-list-header">
+        <Breadcrumbs
+          links={[
+            {label: 'Home', labelSk: 'Domov', to: `/${language}`},
+            {
+              label: 'Contact',
+              labelSk: 'Kontakt',
+              to: `${language}/contact`,
+            },
+          ]}
+        />
+        <h1>{blog.title}</h1>
+        <div className="blog-grid">
+          <PaginatedResourceSection connection={articles}>
+            {({node: article, index}) => (
+              <ArticleItem
+                article={article}
+                key={article.id}
+                loading={index < 2 ? 'eager' : 'lazy'}
+              />
+            )}
+          </PaginatedResourceSection>
+        </div>
       </div>
     </div>
   );
