@@ -1307,7 +1307,9 @@ button.reset:hover:not(:has(> *)) {
 
   .header {
     padding: var(--padding-page-mobile);
+    height: 90px;
   }
+
   .logo-desktop {
     display: none;
   }
