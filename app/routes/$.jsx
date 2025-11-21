@@ -2,7 +2,7 @@
  * @param {Route.LoaderArgs}
  */
 export async function loader({request}) {
-  throw new Response(`${new URL(request.url).pathname} not found`, {
+  throw new Response(`${new URL(request.url).pathname} not found22`, {
     status: 404,
   });
 }

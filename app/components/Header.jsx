@@ -21,6 +21,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
   const {shop, menu} = header;
 
   const isHome =
+    pathname === '/' ||
     pathname === '/sk' ||
     pathname === '/sk/' ||
     pathname === '/en' ||

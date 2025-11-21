@@ -41,7 +41,7 @@ async function loadCriticalData({context, request, params}) {
   ]);
 
   if (!page) {
-    throw new Response('Not Found', {status: 404});
+    throw new Response('Not Found7777', {status: 404});
   }
 
   redirectIfHandleIsLocalized(request, {handle: params.handle, data: page});

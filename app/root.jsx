@@ -18,8 +18,7 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from './components/PageLayout';
-import {useLocation} from 'react-router';
-
+import {useLocation, Link} from 'react-router';
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
  * @type {ShouldRevalidateFunction}
@@ -237,14 +236,46 @@ export default function App() {
 //   );
 // }
 
+const t = {
+  sk: {
+    notFound: 'Stránka sa nenašla',
+    back: 'Späť na úvod',
+  },
+  en: {
+    notFound: 'Page not found',
+    back: 'Back to home',
+  },
+};
+
 export function ErrorBoundary() {
   const error = useRouteError();
+
+  const {pathname} = useLocation();
+  const prefix = pathname.split('/')[1];
+  const currentLang = ['sk', 'en'].includes(prefix) ? prefix : 'en';
+
   let errorMessage = 'Unknown error';
   let errorStatus = 500;
 
   if (isRouteErrorResponse(error)) {
     errorMessage = error?.data?.message ?? error.data;
     errorStatus = error.status;
+
+    if (errorStatus === 404) {
+      // Tu je tvoj vlastný HTML/JSX a štýl len pre 404
+      return (
+        <div className="error-page">
+          <div className="error-bg" />
+          <div className="error-content">
+            <h1 style={{fontSize: '5rem', margin: 0, color: '#fff'}}>404</h1>
+            <h2>{t[currentLang].notFound}</h2>
+            <Link className="primary-button" to="/">
+              {t[currentLang].back}
+            </Link>
+          </div>
+        </div>
+      );
+    }
   } else if (error instanceof Error) {
     errorMessage = error.message;
   }
