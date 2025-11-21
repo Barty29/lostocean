@@ -30,7 +30,8 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
   return (
     <header className={isHome ? 'header header-home' : 'header header-page'}>
       <NavLink prefetch="intent" to={`/${language}`} end>
-        <img src={Logo} alt="logo" />
+        <img src={Logo} alt="logo" className="logo-desktop" />
+        <img src={Logo} alt="logo" width="90px" className="logo-mobile" />
       </NavLink>
       <NavLink
         prefetch="intent"
