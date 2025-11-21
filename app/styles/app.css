@@ -1337,6 +1337,7 @@ button.reset:hover:not(:has(> *)) {
 
   .footer-simple {
     padding: var(--padding-page-mobile);
+    height: 80px;
   }
   .layout-padding {
     padding: 0 16px;
