@@ -1316,6 +1316,12 @@ button.reset:hover:not(:has(> *)) {
   .logo-mobile {
     display: block;
   }
+
+  /* ASIDE */
+  aside header {
+    height: 90px;
+  }
+
   /* 404 */
   .error-bg {
     background-repeat: repeat-y;
