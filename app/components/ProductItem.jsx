@@ -1,6 +1,7 @@
 import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
+import {useLocale} from '~/hooks/useLocale';
 
 /**
  * @param {{
@@ -12,6 +13,7 @@ import {useVariantUrl} from '~/lib/variants';
  * }}
  */
 export function ProductItem({product, loading}) {
+  const {language} = useLocale();
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
 
@@ -23,7 +25,7 @@ export function ProductItem({product, loading}) {
       className="product-item"
       key={product.id}
       prefetch="intent"
-      to={variantUrl}
+      to={`/${language}${variantUrl}`}
     >
       {image && (
         <Image

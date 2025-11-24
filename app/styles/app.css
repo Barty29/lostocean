@@ -487,15 +487,20 @@ a:hover {
 }
 
 @media (max-width: 600px) {
-  .filter {
+  /* .filter {
     flex-direction: column;
     width: 100%;
+  } */
+  .filter {
+    /* flex-direction: column; */
+    width: 100%;
+    gap: 16px;
   }
   .filter-box {
-    width: 100%;
+    width: calc(50% - 8px);
   }
   .filter-box--active {
-    width: 100%;
+    width: calc(50% - 8px);
   }
 }
 

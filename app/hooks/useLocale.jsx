@@ -28,6 +28,17 @@ export const translations = {
 <p>Our brand originates from Slovakia. We are based in Bratislava and partly in the mountains of Orava.</p>
 <p>Lost Ocean is made for souls who walk a little darker. For people who love alternative style, tattoos, Wicca, and are looking for clothing that reflects who they are.</p>
 `,
+    catalog_heading: 'Into the Deep collection ',
+    catalog_description:
+      'Discover our first collection inspired by the ocean, tattoos, wild nature, and wicca. The beginning of the Lost Ocean story starts here.',
+    filter_label_all: 'All',
+    filter_label_tshirts: 'T-shirts',
+    filter_label_hoodies: 'Hoodies',
+    filter_label_accessories: 'Accessories',
+    add_to_cart: 'Add to cart',
+    sold_out: 'Sold out',
+    size_guide: 'Size guide',
+    delivery_info: 'Delivery & Shipping Protection | Returns ',
   },
   sk: {
     home_heading: 'Vitaj v hlbinách',
@@ -55,6 +66,17 @@ export const translations = {
 <p>Naša značka pochádza zo Slovenska. Sídlime v Bratislave a čiastočne aj na Orave, obklopení horami.</p>
 <p>Lost Ocean je vytvorený pre duše, ktoré kráčajú temnejšie. Pre ľudí, ktorí milujú alternatívny štýl, tetovania, wiccu a hľadajú oblečenie, ktoré odráža to, kým sú.</p>
 `,
+    catalog_heading: 'Kolekcia Into the Deep',
+    catalog_description:
+      'Objav našu prvú kolekciu inšpirovanú oceánom, tattoo, divokou prírodou a wiccou. Začiatok príbehu Lost Ocean sa začína tu.',
+    filter_label_all: 'Všetko',
+    filter_label_tshirts: 'Tričká',
+    filter_label_hoodies: 'Mikiny',
+    filter_label_accessories: 'Doplnky',
+    add_to_cart: 'Pridať do košíka',
+    sold_out: 'Vypredané',
+    size_guide: 'Veľkostná tabuľka',
+    delivery_info: 'Doprava a ochrana zásielky | Vrátenie tovaru ',
   },
 };
 

@@ -83,18 +83,20 @@ export default function Collection() {
           ]}
         />
         <div>
-          <h1>Into the Deep collection</h1>
-          <p style={{marginTop: '8px'}}>
-            Discover our first collection inspired by the ocean, tattoos, wild
-            nature, and wicca. The beginning of the Lost Ocean story starts
-            here.
-          </p>
+          <div>
+            <h1>{t.catalog_heading}</h1>
+            <p style={{marginTop: '8px'}}>{t.catalog_description}</p>
+          </div>
         </div>
         <div className="filter">
-          <FilterBox label="All" url="" />
-          <FilterBox label="T-shirts" url="t-shirts" />
-          <FilterBox label="Hoodies" url="hoodies" />
-          <FilterBox label="Accessories" url="accessories" active={true} />
+          <FilterBox label={t.filter_label_all} url="" />
+          <FilterBox label={t.filter_label_tshirts} url="t-shirts" />
+          <FilterBox label={t.filter_label_hoodies} url="hoodies" />
+          <FilterBox
+            label={t.filter_label_accessories}
+            url="accessories"
+            active={true}
+          />
         </div>
       </div>
       <hr className="divider" />

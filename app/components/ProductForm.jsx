@@ -1,6 +1,7 @@
 import {Link, useNavigate} from 'react-router';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
+import {useLocale} from '~/hooks/useLocale';
 
 /**
  * @param {{
@@ -11,6 +12,7 @@ import {useAside} from './Aside';
 export function ProductForm({productOptions, selectedVariant}) {
   const navigate = useNavigate();
   const {open} = useAside();
+  const {t} = useLocale();
   return (
     <div className="product-form">
       {productOptions.map((option) => {
@@ -119,7 +121,7 @@ export function ProductForm({productOptions, selectedVariant}) {
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {selectedVariant?.availableForSale ? t.add_to_cart : t.sold_out}
       </AddToCartButton>
     </div>
   );

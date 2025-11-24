@@ -7,6 +7,7 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
+import {useLocale} from '~/hooks/useLocale';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
@@ -100,6 +101,7 @@ function loadDeferredData({context, params}) {
 export default function Product() {
   /** @type {LoaderReturnData} */
   const {product} = useLoaderData();
+  const {t} = useLocale();
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -161,8 +163,8 @@ export default function Product() {
               cursor: 'pointer',
             }}
           >
-            <p>Size guide</p>
-            <p>Delivery & Shipping Protection | Returns</p>
+            <p>{t.size_guide}</p>
+            <p>{t.delivery_info}</p>
           </div>
         </div>
       </div>

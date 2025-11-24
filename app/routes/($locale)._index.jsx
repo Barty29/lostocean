@@ -11,7 +11,7 @@ import SimpleFooter from '~/components/SimpleFooter';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Lost Ocean'}];
 };
 
 /**
