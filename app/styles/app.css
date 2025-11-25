@@ -1217,7 +1217,7 @@ button.reset:hover:not(:has(> *)) {
   }
 
   .header-home {
-    background-color: #212121f1;
+    background-color: #212121da;
   }
 
   .home-page {
@@ -1242,7 +1242,7 @@ button.reset:hover:not(:has(> *)) {
     padding: var(--padding-page-tablet);
   }
   .header-home {
-    background-color: #212121f1;
+    background-color: #212121da;
   }
   .header-logo-text {
     display: none;
