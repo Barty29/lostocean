@@ -4,11 +4,10 @@ import {useAside} from '~/components/Aside';
 import {CartLineItem} from '~/components/CartLineItem';
 import {CartLineItemPage} from '~/components/CartLineItemPage';
 import {CartSummary} from './CartSummary';
-import CartLogo from '~/assets/CartLogo221.svg';
+import CartLogo from '~/assets/logo-cart.svg';
 import Logo from '~/assets/logo-grey.svg';
 import {useLocale} from '~/hooks/useLocale';
 import Breadcrumbs from '~/components/Breadcrumbs';
-// import CartLogo from '~/assets/CartLogo28.svg';
 
 /**
  * The main cart component that displays the cart items and summary.

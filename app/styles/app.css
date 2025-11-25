@@ -1,6 +1,7 @@
 /* Variables */
 :root {
   --neutral-color-100: #f9f9f9;
+  --neutral-color-500: #303030;
   --neutral-color-700: #242424;
   --neutral-color-800: #212121;
   --neutral-color-900: #1d1d1d;
@@ -61,7 +62,7 @@ a:hover {
 .divider-primary {
   border: none;
   height: 1px;
-  background-color: var(--primary-color);
+  background-color: var(--neutral-color-700);
   margin: 8px 0px;
 }
 
@@ -153,8 +154,6 @@ a:hover {
   position: fixed;
   width: 100%;
   height: 100px;
-  /* background-color: #21212130; */
-  /* background-color: var(--neutral-color-800); */
   display: flex;
   align-items: center;
   padding: var(--padding-page-desktop);
@@ -174,7 +173,7 @@ a:hover {
   background-color: #21212194;
 }
 .header-page {
-  background-color: #212121;
+  background-color: var(--neutral-color-800);
 }
 
 .header-logo-text {
@@ -270,7 +269,7 @@ a:hover {
 /* Home page */
 
 .home-page {
-  background-image: url('../assets/bg77.jpg');
+  background-image: url('../assets/bg-desktop.jpg');
   background-size: cover;
   background-position: right center;
   background-repeat: no-repeat;
@@ -321,7 +320,7 @@ a:hover {
   padding: 0 46px;
 }
 
-.background-image {
+/* .background-image {
   background-image: url('../assets/background2.jpeg');
   background-size: cover;
   background-position: center;
@@ -330,7 +329,7 @@ a:hover {
 
   width: 100%;
   min-height: 100vh;
-}
+} */
 
 /* Catalog */
 /* Detail */
@@ -389,9 +388,7 @@ a:hover {
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
-  /* background-color: var(--primary-color); */
   background-color: #292929b0;
-  /* background-color: var(--neutral-color-700); */
   padding: 8px 16px;
   color: inherit;
   transition:
@@ -402,7 +399,6 @@ a:hover {
 .product-item img {
   width: 100%;
   height: auto;
-  /* padding: 32px 0px; */
 }
 
 .product-item:hover {
@@ -435,8 +431,8 @@ a:hover {
 }
 
 .filter-box {
-  background-color: #212121;
-  background-image: url('../assets/fish-filter.svg');
+  background-color: var(--neutral-color-800);
+  background-image: url('../assets/logo-fish-filter.svg');
   background-repeat: no-repeat;
   background-size: 70%;
   background-position: center;
@@ -454,7 +450,7 @@ a:hover {
 }
 .filter-box--active {
   background-color: var(--primary-color);
-  background-image: url('../assets/fish-filter.svg');
+  background-image: url('../assets/logo-fish-filter.svg');
   background-repeat: no-repeat;
   background-size: 70%;
   background-position: center;
@@ -474,6 +470,7 @@ a:hover {
 
 .filter-box:hover {
   color: var(--neutral-color-100);
+  background-color: var(--primary-color);
 }
 .filter-box--active:hover {
   color: var(--neutral-color-100);
@@ -492,12 +489,7 @@ a:hover {
 }
 
 @media (max-width: 600px) {
-  /* .filter {
-    flex-direction: column;
-    width: 100%;
-  } */
   .filter {
-    /* flex-direction: column; */
     width: 100%;
     gap: 16px;
   }
@@ -516,9 +508,6 @@ a:hover {
 .filter-box--active h3 {
   font-size: 24px;
   font-weight: 500;
-}
-.filter-box:hover {
-  background-color: var(--primary-color);
 }
 .filter-box:hover h3 {
   text-shadow: 0px 0px 20px #1d1d1d;
@@ -1218,7 +1207,7 @@ button.reset:hover:not(:has(> *)) {
   }
 
   .home-page {
-    background-image: url('../assets/bg-tablet2.jpg');
+    background-image: url('../assets/bg-tablet.jpg');
     background-position: center;
     width: 100%;
     min-height: 100vh;
@@ -1257,7 +1246,7 @@ button.reset:hover:not(:has(> *)) {
   }
 
   .home-page {
-    background-image: url('../assets/bg-tablet2.jpg');
+    background-image: url('../assets/bg-mobile.png');
     background-position: center;
     width: 100%;
     min-height: 100vh;
@@ -1311,6 +1300,10 @@ button.reset:hover:not(:has(> *)) {
     position: static;
     padding: 32px;
     transform: translateY(0%);
+  }
+  /* CATALOG */
+  .filter-box:hover {
+    background-color: var(--neutral-color-800);
   }
 }
 
@@ -1375,6 +1368,11 @@ button.reset:hover:not(:has(> *)) {
   }
   .cart-lines-mobile {
     display: block;
+  }
+
+  /* CATALOG */
+  .filter-box:hover {
+    background-color: var(--neutral-color-800);
   }
 
   /* DETAIL */

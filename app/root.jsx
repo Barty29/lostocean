@@ -19,6 +19,7 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from './components/PageLayout';
 import {useLocation, Link} from 'react-router';
+import ScrollToTop from './components/ScrollToTop';
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
  * @type {ShouldRevalidateFunction}
@@ -203,6 +204,7 @@ export default function App() {
         consent={data.consent}
       >
         <PageLayout {...data}>
+          <ScrollToTop />
           <Outlet />
         </PageLayout>
       </Analytics.Provider>

@@ -3,7 +3,7 @@ import {useVariantUrl} from '~/lib/variants';
 import {Link} from 'react-router';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
-import TrashIcon from '~/assets/trash-icon2.svg';
+import TrashIcon from '~/assets/trash-icon.svg';
 
 /**
  * A single line item in the cart. It displays the product image, title, price.
