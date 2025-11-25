@@ -283,7 +283,7 @@ a:hover {
 /* Home page */
 
 .home-page {
-  background-image: url('../assets/bg-desktop.jpg');
+  background-image: url('../assets/bg-desktop.webp');
   background-size: cover;
   background-position: right center;
   background-repeat: no-repeat;
@@ -1217,11 +1217,11 @@ button.reset:hover:not(:has(> *)) {
   }
 
   .header-home {
-    background-color: #212121da;
+    /* background-color: #212121da; */
   }
 
   .home-page {
-    background-image: url('../assets/bg-tablet.jpg');
+    background-image: url('../assets/bg-tablet.webp');
     background-position: center;
     width: 100%;
     min-height: 100vh;
@@ -1242,7 +1242,7 @@ button.reset:hover:not(:has(> *)) {
     padding: var(--padding-page-tablet);
   }
   .header-home {
-    background-color: #212121da;
+    background-color: #212121be;
   }
   .header-logo-text {
     display: none;
@@ -1260,7 +1260,7 @@ button.reset:hover:not(:has(> *)) {
   }
 
   .home-page {
-    background-image: url('../assets/bg-mobile.png');
+    background-image: url('../assets/bg-mobile.webp');
     background-position: center;
     width: 100%;
     min-height: 100vh;
