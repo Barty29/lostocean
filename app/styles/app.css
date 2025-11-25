@@ -275,13 +275,15 @@ a:hover {
   background-position: right center;
   background-repeat: no-repeat;
   width: 100%;
-  min-height: 100vh;
+  height: 100dvh;
 }
 
 .home-page-layout {
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  position: relative;
 }
 
 .home-content-box {
@@ -314,6 +316,9 @@ a:hover {
 
 .layout-padding {
   padding: 0 46px 46px;
+}
+.layout-padding-home {
+  padding: 0 46px;
 }
 
 .background-image {
@@ -1274,6 +1279,9 @@ button.reset:hover:not(:has(> *)) {
   .layout-padding {
     padding: 0 32px;
   }
+  .layout-padding-home {
+    padding: 0 32px;
+  }
   .breadcrumbs {
     margin-top: 124px;
   }
@@ -1351,6 +1359,9 @@ button.reset:hover:not(:has(> *)) {
     height: 80px;
   }
   .layout-padding {
+    padding: 0 16px;
+  }
+  .layout-padding-home {
     padding: 0 16px;
   }
   /* CART */

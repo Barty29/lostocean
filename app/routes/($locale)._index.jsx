@@ -113,7 +113,7 @@ export default function Homepage() {
 
   return (
     <div className="home-page">
-      <div className="layout-padding home-page-layout">
+      <div className="layout-padding-home home-page-layout">
         <div className="home-content-box">
           <h1 style={{fontSize: '56px'}}>{t.home_heading}</h1>
           <p style={{marginTop: '8px', color: 'rgb(191, 191, 191)'}}>
