@@ -62,7 +62,7 @@ a:hover {
 .divider-primary {
   border: none;
   height: 1px;
-  background-color: var(--neutral-color-700);
+  background-color: var(--neutral-color-500);
   margin: 8px 0px;
 }
 
@@ -231,10 +231,24 @@ a:hover {
 
 /* Aside */
 
+.header-aside-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* height: 100%; */
+  /* height: 100dvh; */
+  box-sizing: border-box;
+  /* height: calc(100dvh - 100px); */
+
+  height: calc(100dvh - var(--header-height));
+  overflow-y: auto;
+  padding: 24px;
+  /* height: calc(100% - 149px); */
+}
+
 /* Simple Footer */
 
 .footer-simple {
-  box-sizing: border-box;
   height: 100px;
   position: fixed;
   bottom: 0;
@@ -585,7 +599,7 @@ aside header h2 {
 }
 
 aside main {
-  margin: 24px;
+  /* margin: 24px; */
 }
 
 aside p {
