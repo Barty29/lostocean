@@ -22,7 +22,7 @@ export function CartMain({layout, cart: originalCart}) {
 
   if (!cart || !cart.lines || cart.totalQuantity === 0) {
     return (
-      <div className="cart-main">
+      <div className={layout === 'aside' ? 'cart-main-empty' : ''}>
         <CartEmpty hidden={false} layout={layout} />
       </div>
     );

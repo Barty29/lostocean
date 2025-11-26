@@ -63,7 +63,7 @@ const navLinks = [
   {id: '03', url: 'cart', labelEN: 'Cart', labelSK: 'Košík'},
   {id: 'hr1', type: 'hr'},
   {id: '04', url: 'about-us', labelEN: 'About us', labelSK: 'O nás'},
-  {id: '05', url: 'blogs', labelEN: 'Blog', labelSK: 'Blog'},
+  // {id: '05', url: 'blogs', labelEN: 'Blog', labelSK: 'Blog'},
   {id: '06', url: 'faq', labelEN: "FAQ's", labelSK: 'FAQ'},
   {id: '07', url: 'contact', labelEN: 'Contact', labelSK: 'Kontakt'},
   {id: 'hr2', type: 'hr'},

@@ -17,6 +17,8 @@ import Logo from '~/assets/lost-ocean-logo.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
+import productStyles from '~/styles/product.css?url';
+import faqStyles from '~/styles/faq.css?url';
 import {PageLayout} from './components/PageLayout';
 import {useLocation, Link} from 'react-router';
 import ScrollToTop from './components/ScrollToTop';
@@ -157,6 +159,8 @@ export function Layout({children}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
+        <link rel="stylesheet" href={productStyles}></link>
+        <link rel="stylesheet" href={faqStyles}></link>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

@@ -1,3 +1,4 @@
+import {useState, useRef, useEffect} from 'react';
 import Breadcrumbs from '~/components/Breadcrumbs';
 import {useLocale} from '~/hooks/useLocale';
 
@@ -18,7 +19,7 @@ const Faq = () => {
           ]}
         />
         <h1>{t.faq_heading}</h1>
-        <div style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '16px'}}>
           <Qustions
             questionSK="Akú veľkosť si mám vybrať?"
             answerSK="Naše produkty sú unisex. V detaile každého produktu nájdete presnú veľkostnú tabuľku, podľa ktorej sa môžete rozhodnúť."
@@ -170,10 +171,61 @@ const Qustions = ({questionSK, answerSK, questionEN, answerEN}) => {
   const questionLabel = language === 'sk' ? questionSK : questionEN;
   const answerLabel = language === 'sk' ? answerSK : answerEN;
 
+  const [open, setOpen] = useState(false);
+  const [height, setHeight] = useState('0px');
+  const contentRef = useRef(null);
+
+  // Kľúčový useEffect na zistenie skutočnej výšky obsahu pre plynulú animáciu
+  useEffect(() => {
+    if (contentRef.current) {
+      // Nastaví výšku na scrollHeight, ak je otvorené, inak 0
+      setHeight(open ? `${contentRef.current.scrollHeight}px` : '0px');
+    }
+  }, [open]);
+
+  // Icon: Chevron Down (inline SVG)
+  const ChevronDown = () => (
+    <svg
+      style={{
+        transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+        transition: 'transform 0.4s ease-in-out',
+        marginLeft: '16px',
+      }}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  );
+
   return (
-    <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-      <b>{questionLabel}</b>
-      <div dangerouslySetInnerHTML={{__html: answerLabel}} />
+    <div className="container-style" onClick={() => setOpen(!open)}>
+      <div className="question-style">
+        {questionLabel}
+        <ChevronDown />
+      </div>
+      <div
+        style={{
+          maxHeight: height,
+          overflow: 'hidden',
+          transition: 'max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
+      >
+        <div
+          ref={contentRef}
+          className="answer-content"
+          style={{pointerEvents: open ? 'auto' : 'none'}}
+          dangerouslySetInnerHTML={{__html: answerLabel}}
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>
     </div>
   );
 };
