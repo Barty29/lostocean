@@ -14,7 +14,7 @@
   /* font sizes */
 
   /* OLD */
-  --aside-width: 440px;
+  --aside-width: 400px;
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
@@ -1267,6 +1267,10 @@ button.reset:hover:not(:has(> *)) {
   /* ASIDE */
   aside header {
     height: 90px;
+  }
+
+  aside {
+    width: 100vw;
   }
 
   /* 404 */

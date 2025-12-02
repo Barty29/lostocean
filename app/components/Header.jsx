@@ -9,6 +9,8 @@ import LogoText from '../assets/lost-ocean-logo-text.svg';
 import HamburgerIcon from '../assets/hamburger.svg';
 import CloseIcon from '../assets/close-icon.svg';
 import Bag from '../assets/bag.svg';
+import InstagramIcon from '~/assets/instagram-icon.svg';
+import FacebookIcon from '~/assets/fb-icon.svg';
 
 /**
  * @param {HeaderProps}
@@ -123,7 +125,10 @@ export function HeaderMenu({menu, primaryDomainUrl, publicStoreDomain}) {
           // style={activeLinkStyle}
           to="https://www.instagram.com/lostoceanclth/"
         >
-          Instagram
+          <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+            <img src={InstagramIcon} alt="instagram-icon" width="24px" />
+            Instagram
+          </div>
         </NavLink>
 
         <NavLink
@@ -134,7 +139,10 @@ export function HeaderMenu({menu, primaryDomainUrl, publicStoreDomain}) {
           // style={activeLinkStyle}
           to="https://www.instagram.com/lostoceanclth/"
         >
-          Facebook
+          <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+            <img src={FacebookIcon} alt="facebook-icon" width="24px" />
+            Facebook
+          </div>
         </NavLink>
       </div>
     </nav>

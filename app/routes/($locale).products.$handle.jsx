@@ -13,6 +13,7 @@ import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {Gallery} from '~/components/Gallery';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import SizeGuide from '~/components/SizeGuide';
 
 /**
  * @type {Route.MetaFunction}
@@ -120,6 +121,12 @@ export default function Product() {
   });
 
   const {title, descriptionHtml} = product;
+  const collections = product.collections?.nodes || [];
+  let collectionHandle = '';
+
+  if (collections.length > 0) {
+    collectionHandle = collections[0].handle;
+  }
 
   const printType = selectedVariant?.selectedOptions.find(
     (opt) => opt.name === 'print-type',
@@ -163,7 +170,9 @@ export default function Product() {
               cursor: 'pointer',
             }}
           >
-            <p>{t.size_guide}</p>
+            {collectionHandle === 'accessories' ? null : (
+              <SizeGuide collectionHandle={collectionHandle} />
+            )}
             <p>{t.delivery_info}</p>
           </div>
         </div>
@@ -235,6 +244,13 @@ const PRODUCT_FRAGMENT = `#graphql
     description
     encodedVariantExistence
     encodedVariantAvailability
+    collections(first: 5) {
+      nodes {
+        title
+        handle
+        id
+      }
+    }
     options {
       name
       optionValues {
