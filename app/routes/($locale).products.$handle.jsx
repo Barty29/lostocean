@@ -173,7 +173,7 @@ export default function Product() {
             {collectionHandle === 'accessories' ? null : (
               <SizeGuide collectionHandle={collectionHandle} />
             )}
-            <p>{t.delivery_info}</p>
+            {/* <p>{t.delivery_info}</p> */}
           </div>
         </div>
       </div>

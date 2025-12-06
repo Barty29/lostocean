@@ -111,39 +111,33 @@ export function HeaderMenu({menu, primaryDomainUrl, publicStoreDomain}) {
       </div>
 
       <div
+        className="header-menu-item"
         style={{
           display: 'flex',
           // flexDirection: 'column',
           gap: '1rem',
         }}
       >
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="https://www.instagram.com/lostoceanclth/"
+        <a
+          href="https://www.instagram.com/lostoceanclth/"
+          target="_blank"
+          className="social-text"
         >
           <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
             <img src={InstagramIcon} alt="instagram-icon" width="24px" />
             Instagram
           </div>
-        </NavLink>
-
-        <NavLink
-          className="header-menu-item"
-          end
-          onClick={close}
-          prefetch="intent"
-          // style={activeLinkStyle}
-          to="https://www.instagram.com/lostoceanclth/"
+        </a>
+        <a
+          href="https://www.instagram.com/lostoceanclth/"
+          target="_blank"
+          className="social-text"
         >
           <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
             <img src={FacebookIcon} alt="facebook-icon" width="24px" />
             Facebook
           </div>
-        </NavLink>
+        </a>
       </div>
     </nav>
   );

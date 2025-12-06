@@ -1,5 +1,6 @@
 import {CartForm, Money} from '@shopify/hydrogen';
 import {useEffect, useRef} from 'react';
+import {useAside} from '~/components/Aside';
 import {useFetcher} from 'react-router';
 import {Link} from 'react-router';
 import {useLocale} from '~/hooks/useLocale';
@@ -34,11 +35,30 @@ export function CartSummary({cart, layout}) {
       >
         {t.shipping_info}
       </p>
+      <p
+        style={{
+          fontWeight: '200',
+          color: '#BFBFBF',
+          // lineHeight: 1,
+          fontSize: '14px',
+        }}
+      >
+        {t.discount_info}
+      </p>
 
-      {/* <CartDiscounts discountCodes={cart?.discountCodes} /> */}
-      {/* <CartGiftCard giftCardCodes={cart?.appliedGiftCards} /> */}
-      <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
-      <CartContinueShopping checkoutUrl={cart?.checkoutUrl} />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
+          marginTop: '24px',
+        }}
+      >
+        {/* <CartDiscounts discountCodes={cart?.discountCodes} /> */}
+        {/* <CartGiftCard giftCardCodes={cart?.appliedGiftCards} /> */}
+        <CartCheckoutActions checkoutUrl={cart?.checkoutUrl} />
+        <CartContinueShopping checkoutUrl={cart?.checkoutUrl} layout={layout} />
+      </div>
     </div>
   );
 }
@@ -51,7 +71,7 @@ function CartCheckoutActions({checkoutUrl}) {
   const {t} = useLocale();
 
   return (
-    <div style={{marginTop: '24px'}}>
+    <div>
       <a
         href={checkoutUrl}
         target="_self"
@@ -63,21 +83,33 @@ function CartCheckoutActions({checkoutUrl}) {
     </div>
   );
 }
-function CartContinueShopping({checkoutUrl}) {
+function CartContinueShopping({checkoutUrl, layout}) {
+  const {close} = useAside();
+
   if (!checkoutUrl) return null;
 
   const {t, language} = useLocale();
 
   return (
-    <div style={{marginTop: '24px'}}>
-      <Link
-        to={`/${language}/catalog`}
-        target="_self"
-        className="primary-button secondary-button"
-        style={{width: '100%'}}
-      >
-        {t.continue_shoping}
-      </Link>
+    <div>
+      {layout === 'aside' ? (
+        <button
+          onClick={close}
+          className="primary-button secondary-button"
+          style={{width: '100%'}}
+        >
+          {t.continue_shoping}
+        </button>
+      ) : (
+        <Link
+          to={`/${language}/catalog`}
+          target="_self"
+          className="primary-button secondary-button"
+          style={{width: '100%'}}
+        >
+          {t.continue_shoping}
+        </Link>
+      )}
     </div>
   );
 }

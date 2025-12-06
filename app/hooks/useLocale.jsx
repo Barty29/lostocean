@@ -39,6 +39,7 @@ export const translations = {
     sold_out: 'Sold out',
     size_guide: 'Size guide',
     delivery_info: 'Delivery & Shipping Protection | Returns ',
+    discount_info: 'Discounts applied at checkout',
   },
   sk: {
     home_heading: 'Vitaj v hlbinách',
@@ -77,6 +78,7 @@ export const translations = {
     sold_out: 'Vypredané',
     size_guide: 'Veľkostná tabuľka',
     delivery_info: 'Doprava a ochrana zásielky | Vrátenie tovaru ',
+    discount_info: 'Zľavy sa uplatnia pri pokladni',
   },
 };
 

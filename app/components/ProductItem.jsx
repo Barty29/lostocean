@@ -17,9 +17,6 @@ export function ProductItem({product, loading}) {
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
 
-  console.log('image', image);
-  console.log('product', product);
-
   return (
     <Link
       className="product-item"

@@ -34,9 +34,9 @@ const Faq = () => {
           />
           <Qustions
             questionSK="Kedy dostanem svoju objednávku?"
-            answerSK="Čas doručenia závisí od vašej doručovacej adresy."
+            answerSK="Čas doručenia závisí od vašej doručovacej adresy. Po spracovaní objednávky trvá doručenie približne 1 až 3 pracovné dni na Slovensku, 2 až 4 dní do Česka, 3 až 7 pracovných dní v rámci EÚ a 7 až 18 pracovných dní do sveta, ide však len o odhad podľa regiónu a prepravcu."
             questionEN="When will I receive my order?"
-            answerEN="Delivery time depends on your shipping address."
+            answerEN="Delivery time depends on your shipping address. After the order is processed, delivery takes approximately 1-3 business days in Slovakia, 2-4 days to Czechia, 3-7 business days across the EU, and 7-18 business days worldwide, but these are only estimated times depending on region and carrier."
           />
           <Qustions
             questionSK="Čo mám robiť, ak mám problém s mojou objednávkou?"

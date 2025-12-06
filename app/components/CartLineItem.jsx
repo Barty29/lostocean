@@ -20,8 +20,15 @@ export function CartLineItem({layout, line}) {
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
   const {close} = useAside();
   // const customImage = product.images.nodes[1];
+  // const customImage =
+  //   product?.images?.nodes?.[1] ?? product?.image ?? merchandise?.image ?? null;
+
   const customImage =
-    product?.images?.nodes?.[1] ?? product?.image ?? merchandise?.image ?? null;
+    merchandise?.image ||
+    product?.featuredImage ||
+    product?.image ||
+    product?.images?.nodes?.[0] ||
+    null;
 
   // console.log('selectedOptions', selectedOptions);
   console.log('merchandise', merchandise);
@@ -35,17 +42,16 @@ export function CartLineItem({layout, line}) {
       className="cart-line"
       style={{
         width: '100%',
-        // borderBottom: layout === 'page' ? '1px solid #2e3c50' : 'none',
       }}
     >
-      {/* {image && (
-        <Image alt={title} data={customImage} loading="lazy" width={110} />
-      )} */}
-      {customImage ? (
-        <Image alt={title} data={customImage} loading="lazy" width={110} />
-      ) : (
-        <div style={{width: 110, height: 110, background: '#333'}} />
-      )}
+      <div className="cart-line-gradient">
+        {customImage ? (
+          <Image alt={title} data={customImage} loading="lazy" width={110} />
+        ) : (
+          <div style={{width: 110, height: 110, background: '#333'}} />
+        )}
+      </div>
+
       {/* {image && <Image alt={title} data={image} loading="lazy" width={110} />} */}
 
       <div

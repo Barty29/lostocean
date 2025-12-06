@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import {useLocale} from '~/hooks/useLocale';
 import SizeGuideTshirt from '~/assets/size-fuide-tshirt.webp';
 import SizeGuideHoodie from '~/assets/size-fuide-hoodie.webp';
+import Ruler from '~/assets/ruler.svg';
 
 const SizeGuide = ({collectionHandle}) => {
   const [open, setOpen] = useState(false);
@@ -31,6 +32,9 @@ const SizeGuide = ({collectionHandle}) => {
         onClick={() => setOpen(true)}
         style={{
           background: 'transparent',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '2px',
           color: 'white',
           border: 'none',
           cursor: 'pointer',
@@ -39,6 +43,11 @@ const SizeGuide = ({collectionHandle}) => {
           padding: 0,
         }}
       >
+        <img
+          src={Ruler}
+          alt="Size Guide"
+          style={{width: '20px', height: '20px', marginRight: '8px'}}
+        />
         {t.size_guide}
       </button>
 
@@ -82,7 +91,7 @@ const SizeGuide = ({collectionHandle}) => {
             <button
               onClick={() => setOpen(false)}
               className="primary-button"
-              style={{width: '100%'}}
+              style={{width: '100%', cursor: 'pointer'}}
             >
               Close
             </button>

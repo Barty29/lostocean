@@ -57,7 +57,7 @@ a:hover {
   border: none;
   height: 1px;
   background-color: var(--neutral-color-100);
-  margin: 0px 0px 32px;
+  margin: 0px 0px 24px;
 }
 
 .divider-primary {
@@ -79,6 +79,7 @@ a:hover {
   box-shadow: none;
   border: none;
   font-size: 16px;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
@@ -231,6 +232,31 @@ a:hover {
 }
 
 /* Aside */
+
+.cart-line-gradient {
+  background: radial-gradient(
+    circle at 30% 20%,
+    #858585 0%,
+    #252525 55%,
+    #1a1a1a 100%
+  );
+  background-size: 200% 200%; /* väčší než samotný box */
+  background-repeat: no-repeat;
+  width: 110px;
+  margin-right: 12px;
+  padding: 6px 0px;
+}
+
+.discount {
+  border: 1px solid var(--neutral-color-500);
+  padding: 6px 24px;
+  text-align: center;
+  height: 52px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .header-aside-menu {
   display: flex;
@@ -393,6 +419,8 @@ a:hover {
 .product-item-text {
   position: absolute;
   display: flex;
+  height: 56px;
+  gap: 8px;
   justify-content: space-between;
   align-items: center;
   bottom: 0;
@@ -435,9 +463,9 @@ a:hover {
 .filter {
   display: flex;
   flex-wrap: nowrap;
-  gap: 32px;
+  gap: 24px;
   box-sizing: border-box;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .filter-box {
@@ -486,7 +514,18 @@ a:hover {
   color: var(--neutral-color-100);
 }
 
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
+  .filter {
+    flex-wrap: wrap;
+  }
+  .filter-box {
+    width: calc(50% - 16px);
+  }
+  .filter-box--active {
+    width: calc(50% - 16px);
+  }
+} */
+@media (max-width: 900px) {
   .filter {
     flex-wrap: wrap;
   }
@@ -865,7 +904,7 @@ button.reset:hover:not(:has(> *)) {
 
 .products-grid {
   display: grid;
-  gap: 32px;
+  gap: 24px;
   margin-bottom: 2rem;
   grid-template-columns: 1fr; /* mobil default = 1 */
 }
