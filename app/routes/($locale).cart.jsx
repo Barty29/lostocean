@@ -5,8 +5,13 @@ import {CartMain} from '~/components/CartMain';
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = () => {
-  return [{title: `Hydrogen | Cart`}];
+
+export const meta = ({params}) => {
+  const language = params.locale || 'en';
+
+  const title = language === 'sk' ? 'Košík | Lost Ocean' : 'Cart | Lost Ocean';
+
+  return [{title}];
 };
 
 /**

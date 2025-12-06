@@ -7,8 +7,13 @@ import {useLocale} from '~/hooks/useLocale';
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = () => {
-  return [{title: `Hydrogen | Blogs`}];
+
+export const meta = ({params}) => {
+  const language = params.locale || 'en';
+
+  const title = language === 'sk' ? 'Blogy | Lost Ocean' : 'Blogs | Lost Ocean';
+
+  return [{title}];
 };
 
 /**

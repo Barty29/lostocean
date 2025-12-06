@@ -8,7 +8,7 @@ import {useLocale} from '~/hooks/useLocale';
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Products`}];
+  return [{title: `Products | Lost Ocean`}];
 };
 
 /**

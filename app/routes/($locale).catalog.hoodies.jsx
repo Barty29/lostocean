@@ -8,8 +8,13 @@ import Breadcrumbs from '~/components/Breadcrumbs';
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = () => {
-  return [{title: `Hydrogen | Products`}];
+export const meta = ({params}) => {
+  const language = params.locale || 'en';
+
+  const title =
+    language === 'sk' ? 'Mikiny | Lost Ocean' : 'Hoodies | Lost Ocean';
+
+  return [{title}];
 };
 
 /**
