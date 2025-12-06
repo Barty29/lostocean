@@ -420,7 +420,7 @@ a:hover {
   position: absolute;
   display: flex;
   height: 56px;
-  gap: 8px;
+  gap: 16px;
   justify-content: space-between;
   align-items: center;
   bottom: 0;

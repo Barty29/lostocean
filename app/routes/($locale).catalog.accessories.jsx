@@ -36,13 +36,13 @@ export async function loader(args) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  * @param {Route.LoaderArgs}
  */
+
 async function loadCriticalData({context, request}) {
   const {storefront} = context;
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 100,
   });
 
-  // 🟢 Tu určíš handle kolekcie, ktorú chceš načítať
   const handle = 'accessories';
 
   const [{collection}] = await Promise.all([
@@ -50,13 +50,35 @@ async function loadCriticalData({context, request}) {
       variables: {
         handle,
         ...paginationVariables,
+        country: storefront.i18n.country,
+        language: storefront.i18n.language,
       },
     }),
   ]);
 
-  // 🟡 Vrátime produkty z kolekcie
   return {collection};
 }
+// async function loadCriticalData({context, request}) {
+//   const {storefront} = context;
+//   const paginationVariables = getPaginationVariables(request, {
+//     pageBy: 100,
+//   });
+
+//   // 🟢 Tu určíš handle kolekcie, ktorú chceš načítať
+//   const handle = 'accessories';
+
+//   const [{collection}] = await Promise.all([
+//     storefront.query(CATALOG_QUERY, {
+//       variables: {
+//         handle,
+//         ...paginationVariables,
+//       },
+//     }),
+//   ]);
+
+//   // 🟡 Vrátime produkty z kolekcie
+//   return {collection};
+// }
 
 /**
  * Load data for rendering content below the fold. This data is deferred and will be

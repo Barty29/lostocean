@@ -44,12 +44,30 @@ async function loadCriticalData({context, request}) {
 
   const [{products}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
-      variables: {...paginationVariables},
+      variables: {
+        ...paginationVariables,
+        country: storefront.i18n.country,
+        language: storefront.i18n.language,
+      },
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
+
   return {products};
 }
+// async function loadCriticalData({context, request}) {
+//   const {storefront} = context;
+//   const paginationVariables = getPaginationVariables(request, {
+//     pageBy: 100,
+//   });
+
+//   const [{products}] = await Promise.all([
+//     storefront.query(CATALOG_QUERY, {
+//       variables: {...paginationVariables},
+//     }),
+//     // Add other queries here, so that they are loaded in parallel
+//   ]);
+//   return {products};
+// }
 
 /**
  * Load data for rendering content below the fold. This data is deferred and will be
