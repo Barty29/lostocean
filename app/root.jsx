@@ -62,6 +62,7 @@ export function links() {
       href: 'https://shop.app',
     },
     {rel: 'icon', type: 'image/svg+xml', href: Logo},
+    {rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg'},
   ];
 }
 
