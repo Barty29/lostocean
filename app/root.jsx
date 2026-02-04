@@ -19,6 +19,8 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import productStyles from '~/styles/product.css?url';
 import faqStyles from '~/styles/faq.css?url';
+import commonStyles from '~/styles/common.css?url';
+import contactStyles from '~/styles/contact.css?url';
 import {PageLayout} from './components/PageLayout';
 import {useLocation, Link} from 'react-router';
 import ScrollToTop from './components/ScrollToTop';
@@ -162,6 +164,8 @@ export function Layout({children}) {
         <link rel="stylesheet" href={appStyles}></link>
         <link rel="stylesheet" href={productStyles}></link>
         <link rel="stylesheet" href={faqStyles}></link>
+        <link rel="stylesheet" href={contactStyles}></link>
+        <link rel="stylesheet" href={commonStyles}></link>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

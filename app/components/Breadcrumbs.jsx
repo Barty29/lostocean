@@ -13,7 +13,7 @@ const Breadcrumbs = ({links = []}) => {
         return (
           <span key={item.to} style={{display: 'flex', gap: '8px'}}>
             {isLast ? (
-              <span style={{opacity: 0.7}}>{label}</span>
+              <span style={{opacity: 1}}>{label}</span>
             ) : (
               <Link to={item.to}>{label}</Link>
             )}

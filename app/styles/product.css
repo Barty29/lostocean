@@ -61,6 +61,74 @@
   color: var(--neutral-color-100);
 }
 
+/* Product item */
+
+.product-item-imageWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-item-imageWrap img {
+  display: block;
+}
+
+.product-item-imageOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* aby hover neblikalo */
+}
+
+.product-item {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  /* padding: 0px 0px 77px; */
+}
+
+.product-item-text {
+  /* position: absolute; */
+  display: flex;
+  height: 56px;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #292929b0;
+  padding: 8px 16px;
+  color: inherit;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.product-item img {
+  width: 100%;
+  height: auto;
+}
+
+.product-item:hover {
+  /* background: radial-gradient(
+    circle at 30% 20%,
+     #aaaaaa 0%,
+    #252525 55%,
+    #1a1a1a 100%
+  ); */
+  /* background-size: 150% 150%; */
+}
+
+.product-item:hover .product-item-text,
+.product-item-text:hover {
+  background-color: var(--primary-color);
+  color: var(--neutral-color-100);
+}
+
+.product-item img {
+  height: auto;
+  width: 100%;
+}
+
 @media (max-width: 1540px) {
   .product-main {
     width: 70%;

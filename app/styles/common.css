@@ -1,0 +1,44 @@
+.snackbar {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #242424;
+  padding: 16px 24px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  z-index: 1000;
+}
+
+.snackbar-success {
+  color: #34d399;
+}
+
+.snackbar-error {
+  color: #fd572c;
+}
+
+.snackbar-close {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(12px);
+  padding: 0;
+  transition: background 0.3s ease;
+}
+.snackbar-close:hover {
+  background: #303030;
+}
+
+@media (max-width: 600px) {
+  .snackbar {
+    padding: 16px 16px;
+  }
+}

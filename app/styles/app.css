@@ -397,69 +397,6 @@ a:hover {
 }
 /* ---------------------------------------------------------------------------------------------------------------- */
 
-.product-item {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  padding: 24px 0px 77px;
-  background: radial-gradient(
-    circle at 30% 20%,
-    /* posun stredu gradientu */ #858585 0%,
-    #252525 55%,
-    #1a1a1a 100%
-  );
-  background-size: 140% 140%; /* väčší než samotný box */
-  background-repeat: no-repeat;
-  box-sizing: border-box;
-  transition:
-    background-position 0.8s ease-in-out,
-    background-size 0.8s ease-in-out;
-}
-
-.product-item-text {
-  position: absolute;
-  display: flex;
-  height: 56px;
-  gap: 16px;
-  justify-content: space-between;
-  align-items: center;
-  bottom: 0;
-  width: 100%;
-  box-sizing: border-box;
-  background-color: #292929b0;
-  padding: 8px 16px;
-  color: inherit;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-
-.product-item img {
-  width: 100%;
-  height: auto;
-}
-
-.product-item:hover {
-  background: radial-gradient(
-    circle at 30% 20%,
-    /* posun stredu gradientu */ #aaaaaa 0%,
-    #252525 55%,
-    #1a1a1a 100%
-  );
-  background-size: 150% 150%;
-}
-
-.product-item:hover .product-item-text,
-.product-item-text:hover {
-  background-color: var(--primary-color);
-  color: var(--neutral-color-100);
-}
-
-.product-item img {
-  height: auto;
-  width: 100%;
-}
-
 .filter {
   display: flex;
   flex-wrap: nowrap;

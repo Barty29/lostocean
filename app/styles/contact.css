@@ -1,0 +1,26 @@
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 500px;
+}
+.contact-form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aaa;
+}
+
+.contact-form-input {
+  width: 100%;
+  padding: 16px;
+  background-color: #1a1a1a;
+  border: 1px solid #8b8b8b;
+  border-radius: 0;
+  color: #fff;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}

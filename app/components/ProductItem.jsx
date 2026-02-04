@@ -1,7 +1,9 @@
+import {useState, useEffect} from 'react';
 import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
 import {useLocale} from '~/hooks/useLocale';
+import {AnimatePresence, motion} from 'framer-motion';
 
 /**
  * @param {{
@@ -15,52 +17,72 @@ import {useLocale} from '~/hooks/useLocale';
 export function ProductItem({product, loading}) {
   const {language} = useLocale();
   const variantUrl = useVariantUrl(product.handle);
-  const image = product.featuredImage;
+  const [isHover, setIsHover] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const img1 = product?.images?.nodes?.[0] || product.featuredImage;
+  const img2 = product?.images?.nodes?.[1];
 
   return (
     <Link
       className="product-item"
-      key={product.id}
-      prefetch="intent"
       to={`/${language}${variantUrl}`}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
     >
-      {image && (
-        <Image
-          alt={image.altText || product.title}
-          data={image}
-          loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
-      )}
+      <div className="product-item-imageWrap">
+        {/* SSR / pred hydratáciou: renderuj len prvý obrázok (stabilné) */}
+        {!mounted ? (
+          img1 && (
+            <Image
+              data={img1}
+              alt={img1.altText || product.title}
+              loading={loading}
+              sizes="(min-width: 45em) 400px, 100vw"
+            />
+          )
+        ) : (
+          /* Po hydratácii: plynulý prechod img1 -> img2 cez overlay */
+          <>
+            {img1 && (
+              <Image
+                data={img1}
+                alt={img1.altText || product.title}
+                loading={loading}
+                sizes="(min-width: 45em) 400px, 100vw"
+              />
+            )}
+
+            {img2 && (
+              <motion.div
+                className="product-item-imageOverlay"
+                initial={false}
+                animate={{
+                  opacity: isHover ? 1 : 0,
+                }}
+                transition={{duration: 0.25, ease: 'easeOut'}}
+              >
+                <Image
+                  data={img2}
+                  alt={img2.altText || product.title}
+                  loading={loading}
+                  sizes="(min-width: 45em) 400px, 100vw"
+                />
+              </motion.div>
+            )}
+          </>
+        )}
+      </div>
+
       <div className="product-item-text">
         <h4>{product.title}</h4>
-        {/* <small> */}
         <Money data={product.priceRange.minVariantPrice} />
-        {/* </small> */}
       </div>
     </Link>
-    // <Link
-    //   className="product-item"
-    //   key={product.id}
-    //   prefetch="intent"
-    //   to={variantUrl}
-    // >
-    //   {image && (
-    //     <Image
-    //       alt={image.altText || product.title}
-    //       // aspectRatio="1/1"
-    //       data={image}
-    //       loading={loading}
-    //       sizes="(min-width: 45em) 400px, 100vw"
-    //     />
-    //   )}
-    //   <div className="product-item-text">
-    //     <h4>{product.title}</h4>
-    //     <small>
-    //       <Money data={product.priceRange.minVariantPrice} />
-    //     </small>
-    //   </div>
-    // </Link>
   );
 }
 

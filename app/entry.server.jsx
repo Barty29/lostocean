@@ -22,6 +22,34 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    imgSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://shopify.com',
+      'data:', // Toto povolí tie base64 SVG obrázky
+    ],
+    styleSrc: [
+      "'self'",
+      "'unsafe-inline'", // ak používaš inline štýly / css-in-js
+      'https://cdn.shopify.com',
+      'https://fonts.googleapis.com',
+    ],
+    styleSrcElem: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://fonts.googleapis.com',
+    ],
+
+    // ✅ toto ti chýba – fonty sa ťahajú z fonts.gstatic.com
+    fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+    connectSrc: [
+      "'self'",
+      'https://api.emailjs.com',
+      'https://cdn.shopify.com',
+      // Ak testuješ lokálne, pridaj aj localhost
+      'http://localhost:*',
+      'ws://localhost:*',
+    ],
   });
 
   const body = await renderToReadableStream(
