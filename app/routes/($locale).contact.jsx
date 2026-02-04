@@ -13,6 +13,8 @@ const Contact = () => {
   const form = useRef();
   const [status, setStatus] = useState(''); // Na sledovanie stavu (odosielanie/úspech)
 
+  console.log('TEST1');
+
   useEffect(() => {
     if (status === 'success' || status === 'error') {
       const timer = setTimeout(() => {
@@ -27,13 +29,19 @@ const Contact = () => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const botTrap = formData.get('website_url');
+    const botTrap = formData.get('b_field_status'); // Názov poľa honeypot
+
+    console.log('TEST2');
+    console.log('botTrap value:', botTrap);
 
     if (botTrap) {
       setStatus('success'); // Oklameme bota, že sa to podarilo
       e.target.reset();
+      console.log('TEST3');
       return;
     }
+
+    console.log('TEST4');
 
     setStatus('sending');
 
@@ -84,20 +92,14 @@ const Contact = () => {
           <h1>{t.contact_heading}</h1>
 
           <form ref={form} onSubmit={sendEmail} className="contact-form">
-            <div
-              style={{
-                position: 'absolute',
-                opacity: 0,
-                zIndex: -1,
-                left: '-5000px',
-              }}
-              aria-hidden="true"
-            >
+            <div style={{display: 'none'}} aria-hidden="true">
               <input
                 type="text"
-                name="website_url"
+                name="b_field_status" // Úplne náhodný názov bez podozrivých slov
                 tabIndex="-1"
-                autoComplete="off"
+                autoComplete="new-password" // Toto funguje na Chrome lepšie ako "off"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')} // Pre istotu, ak by to bot skúsil "reálne"
               />
             </div>
             <div>
