@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useLocale} from '~/hooks/useLocale';
-import SizeGuideTshirt from '~/assets/size-fuide-tshirt.webp';
+// import SizeGuideTshirt from '~/assets/size-fuide-tshirt.webp';
+import SizeGuideTshirt from '~/assets/t-shirt_size_guide.png';
 import SizeGuideHoodie from '~/assets/size-fuide-hoodie.webp';
 import Ruler from '~/assets/ruler.svg';
 

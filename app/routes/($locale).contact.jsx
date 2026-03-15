@@ -31,17 +31,12 @@ const Contact = () => {
     const formData = new FormData(e.currentTarget);
     const botTrap = formData.get('b_field_status'); // Názov poľa honeypot
 
-    console.log('TEST2');
-    console.log('botTrap value:', botTrap);
-
     if (botTrap) {
       setStatus('success'); // Oklameme bota, že sa to podarilo
       e.target.reset();
-      console.log('TEST3');
+
       return;
     }
-
-    console.log('TEST4');
 
     setStatus('sending');
 
