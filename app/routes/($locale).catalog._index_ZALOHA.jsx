@@ -13,7 +13,7 @@ export const meta = ({params}) => {
   const language = params.locale || 'en';
 
   const title =
-    language === 'sk' ? 'Tričká | Lost Ocean' : 'T-shirts | Lost Ocean';
+    language === 'sk' ? 'Produkty | Lost Ocean' : 'Products | Lost Ocean';
 
   return [{title}];
 };
@@ -42,12 +42,9 @@ async function loadCriticalData({context, request}) {
     pageBy: 100,
   });
 
-  const handle = 't-shirts';
-
-  const [{collection}] = await Promise.all([
+  const [{products}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {
-        handle,
         ...paginationVariables,
         country: storefront.i18n.country,
         language: storefront.i18n.language,
@@ -55,8 +52,22 @@ async function loadCriticalData({context, request}) {
     }),
   ]);
 
-  return {collection};
+  return {products};
 }
+// async function loadCriticalData({context, request}) {
+//   const {storefront} = context;
+//   const paginationVariables = getPaginationVariables(request, {
+//     pageBy: 100,
+//   });
+
+//   const [{products}] = await Promise.all([
+//     storefront.query(CATALOG_QUERY, {
+//       variables: {...paginationVariables},
+//     }),
+//     // Add other queries here, so that they are loaded in parallel
+//   ]);
+//   return {products};
+// }
 
 /**
  * Load data for rendering content below the fold. This data is deferred and will be
@@ -70,8 +81,7 @@ function loadDeferredData({context}) {
 
 export default function Collection() {
   /** @type {LoaderReturnData} */
-  // const {products} = useLoaderData();
-  const {collection} = useLoaderData();
+  const {products} = useLoaderData();
   const {t, language} = useLocale();
 
   // preč collection className
@@ -89,25 +99,19 @@ export default function Collection() {
           ]}
         />
         <div>
-          <div>
-            <h1>{t.catalog_heading}</h1>
-            <p style={{marginTop: '8px'}}>{t.catalog_description}</p>
-          </div>
+          <h1>{t.catalog_heading}</h1>
+          <p style={{marginTop: '8px'}}>{t.catalog_description}</p>
         </div>
         <div className="filter">
-          <FilterBox label={t.filter_label_all} url="" />
-          <FilterBox
-            label={t.filter_label_tshirts}
-            url="t-shirts"
-            active={true}
-          />
+          <FilterBox label={t.filter_label_all} url="catalog" active={true} />
+          <FilterBox label={t.filter_label_tshirts} url="t-shirts" />
           <FilterBox label={t.filter_label_hoodies} url="hoodies" />
           <FilterBox label={t.filter_label_accessories} url="accessories" />
         </div>
       </div>
       <hr className="divider" />
       <PaginatedResourceSection
-        connection={collection?.products}
+        connection={products}
         resourcesClassName="products-grid"
       >
         {({node: product, index}) => (
@@ -174,33 +178,8 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
 `;
 
 // NOTE: https://shopify.dev/docs/api/storefront/latest/objects/product
-// const CATALOG_QUERY = `#graphql
-//   query Catalog(
-//     $country: CountryCode
-//     $language: LanguageCode
-//     $first: Int
-//     $last: Int
-//     $startCursor: String
-//     $endCursor: String
-//   ) @inContext(country: $country, language: $language) {
-//     products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
-//       nodes {
-//         ...CollectionItem
-//       }
-//       pageInfo {
-//         hasPreviousPage
-//         hasNextPage
-//         startCursor
-//         endCursor
-//       }
-//     }
-//   }
-//   ${COLLECTION_ITEM_FRAGMENT}
-// `;
-
 const CATALOG_QUERY = `#graphql
-  query CollectionProducts(
-    $handle: String!
+  query Catalog(
     $country: CountryCode
     $language: LanguageCode
     $first: Int
@@ -208,20 +187,15 @@ const CATALOG_QUERY = `#graphql
     $startCursor: String
     $endCursor: String
   ) @inContext(country: $country, language: $language) {
-    collection(handle: $handle) {
-      id
-      title
-      description
-      products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
-        nodes {
-          ...CollectionItem
-        }
-        pageInfo {
-          hasPreviousPage
-          hasNextPage
-          startCursor
-          endCursor
-        }
+    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
+      nodes {
+        ...CollectionItem
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
       }
     }
   }

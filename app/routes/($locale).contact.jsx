@@ -64,26 +64,27 @@ const Contact = () => {
   };
 
   return (
-    <motion.div
-      initial={{opacity: 0, y: 24}}
-      animate={{opacity: 1, y: 0}}
-      transition={{
-        duration: 0.6,
-        ease: 'easeOut',
-      }}
-    >
-      <div className="layout-padding">
-        <div className="product-list-header">
-          <Breadcrumbs
-            links={[
-              {label: 'Home', labelSk: 'Domov', to: `/${language}`},
-              {
-                label: 'Contact',
-                labelSk: 'Kontakt',
-                to: `/${language}/contact`,
-              },
-            ]}
-          />
+    <div className="layout-padding">
+      <div className="product-list-header">
+        <Breadcrumbs
+          links={[
+            {label: 'Home', labelSk: 'Domov', to: `/${language}`},
+            {
+              label: 'Contact',
+              labelSk: 'Kontakt',
+              to: `/${language}/contact`,
+            },
+          ]}
+        />
+        <motion.div
+          className="product-list-header"
+          initial={{opacity: 0, y: 24}}
+          animate={{opacity: 1, y: 0}}
+          transition={{
+            duration: 0.6,
+            ease: 'easeOut',
+          }}
+        >
           <h1>{t.contact_heading}</h1>
 
           <form ref={form} onSubmit={sendEmail} className="contact-form">
@@ -157,9 +158,9 @@ const Contact = () => {
               )}
             </AnimatePresence>
           </form>
-        </div>
+        </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
-import {useLoaderData, Link} from 'react-router';
-import {getPaginationVariables} from '@shopify/hydrogen';
-import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {Suspense} from 'react';
+import {Await, useLoaderData, Link} from 'react-router';
 import {ProductItem} from '~/components/ProductItem';
 import {useLocale} from '~/hooks/useLocale';
 import Breadcrumbs from '~/components/Breadcrumbs';
@@ -8,7 +7,6 @@ import Breadcrumbs from '~/components/Breadcrumbs';
 /**
  * @type {Route.MetaFunction}
  */
-
 export const meta = ({params}) => {
   const language = params.locale || 'en';
 
@@ -22,69 +20,83 @@ export const meta = ({params}) => {
  * @param {Route.LoaderArgs} args
  */
 export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
   return {...deferredData, ...criticalData};
 }
 
 /**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
+ * Tu nechávame len veci, ktoré majú byť hneď.
  * @param {Route.LoaderArgs}
  */
-async function loadCriticalData({context, request}) {
-  const {storefront} = context;
-  const paginationVariables = getPaginationVariables(request, {
-    pageBy: 100,
-  });
-
-  const [{products}] = await Promise.all([
-    storefront.query(CATALOG_QUERY, {
-      variables: {
-        ...paginationVariables,
-        country: storefront.i18n.country,
-        language: storefront.i18n.language,
-      },
-    }),
-  ]);
-
-  return {products};
-}
-// async function loadCriticalData({context, request}) {
-//   const {storefront} = context;
-//   const paginationVariables = getPaginationVariables(request, {
-//     pageBy: 100,
-//   });
-
-//   const [{products}] = await Promise.all([
-//     storefront.query(CATALOG_QUERY, {
-//       variables: {...paginationVariables},
-//     }),
-//     // Add other queries here, so that they are loaded in parallel
-//   ]);
-//   return {products};
-// }
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- * @param {Route.LoaderArgs}
- */
-function loadDeferredData({context}) {
+async function loadCriticalData() {
   return {};
 }
 
+/**
+ * Produkty načítame deferred, aby sa mohol zobraziť skeleton.
+ * @param {Route.LoaderArgs}
+ */
+function loadDeferredData({context}) {
+  const {storefront} = context;
+
+  const collections = storefront
+    .query(CATALOG_COLLECTIONS_QUERY, {
+      variables: {
+        country: storefront.i18n.country,
+        language: storefront.i18n.language,
+      },
+    })
+    .then(({collections}) => {
+      const desiredOrder = ['t-shirts', 'hoodies', 'accessories'];
+
+      const sortedCollections = collections.nodes
+        .filter((collection) => desiredOrder.includes(collection.handle))
+        .sort(
+          (a, b) =>
+            desiredOrder.indexOf(a.handle) - desiredOrder.indexOf(b.handle),
+        );
+
+      return sortedCollections;
+    });
+
+  return {collections};
+}
+
+// function loadDeferredData({context}) {
+//   const {storefront} = context;
+
+//   const collections = storefront
+//     .query(CATALOG_COLLECTIONS_QUERY, {
+//       variables: {
+//         country: storefront.i18n.country,
+//         language: storefront.i18n.language,
+//       },
+//     })
+//     .then(async ({collections}) => {
+//       // 2 sekundový delay aby bol viditeľný skeleton
+//       await new Promise((resolve) => setTimeout(resolve, 2000));
+
+//       const desiredOrder = ['t-shirts', 'hoodies', 'accessories'];
+
+//       const sortedCollections = collections.nodes
+//         .filter((collection) => desiredOrder.includes(collection.handle))
+//         .sort(
+//           (a, b) =>
+//             desiredOrder.indexOf(a.handle) - desiredOrder.indexOf(b.handle),
+//         );
+
+//       return sortedCollections;
+//     });
+
+//   return {collections};
+// }
+
 export default function Collection() {
-  /** @type {LoaderReturnData} */
-  const {products} = useLoaderData();
+  const {collections} = useLoaderData();
   const {t, language} = useLocale();
 
-  // preč collection className
   return (
     <div className="layout-padding">
       <div className="product-list-header">
@@ -94,7 +106,7 @@ export default function Collection() {
             {
               label: 'Catalog',
               labelSk: 'Katalóg',
-              to: `${language}/catalog`,
+              to: `/${language}/catalog`,
             },
           ]}
         />
@@ -102,6 +114,7 @@ export default function Collection() {
           <h1>{t.catalog_heading}</h1>
           <p style={{marginTop: '8px'}}>{t.catalog_description}</p>
         </div>
+
         <div className="filter">
           <FilterBox label={t.filter_label_all} url="catalog" active={true} />
           <FilterBox label={t.filter_label_tshirts} url="t-shirts" />
@@ -109,19 +122,48 @@ export default function Collection() {
           <FilterBox label={t.filter_label_accessories} url="accessories" />
         </div>
       </div>
+
       <hr className="divider" />
-      <PaginatedResourceSection
-        connection={products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 100 ? 'eager' : undefined}
-          />
-        )}
-      </PaginatedResourceSection>
+
+      <Suspense fallback={<ProductsSkeleton />}>
+        <Await resolve={collections}>
+          {(resolvedCollections) => {
+            const products = resolvedCollections.flatMap(
+              (collection) => collection.products.nodes,
+            );
+
+            return (
+              <div style={{marginBottom: '48px'}}>
+                <div className="products-grid">
+                  {products.map((product, index) => (
+                    <ProductItem
+                      key={product.id}
+                      product={product}
+                      loading={index < 6 ? 'eager' : undefined}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          }}
+        </Await>
+      </Suspense>
+    </div>
+  );
+}
+
+function ProductsSkeleton() {
+  return (
+    <div style={{marginBottom: '48px'}}>
+      <div className="products-grid">
+        {Array.from({length: 8}).map((_, index) => (
+          <div key={index} className="product-skeleton">
+            <div className="product-skeleton-image" />
+            <div className="product-skeleton-title" />
+            <div className="product-skeleton-price" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -177,25 +219,21 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
   }
 `;
 
-// NOTE: https://shopify.dev/docs/api/storefront/latest/objects/product
-const CATALOG_QUERY = `#graphql
-  query Catalog(
+const CATALOG_COLLECTIONS_QUERY = `#graphql
+  query CatalogCollections(
     $country: CountryCode
     $language: LanguageCode
-    $first: Int
-    $last: Int
-    $startCursor: String
-    $endCursor: String
   ) @inContext(country: $country, language: $language) {
-    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
+    collections(first: 20) {
       nodes {
-        ...CollectionItem
-      }
-      pageInfo {
-        hasPreviousPage
-        hasNextPage
-        startCursor
-        endCursor
+        id
+        handle
+        title
+        products(first: 100) {
+          nodes {
+            ...CollectionItem
+          }
+        }
       }
     }
   }

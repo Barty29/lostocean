@@ -7,6 +7,8 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
+import {motion} from 'framer-motion';
+
 import {useLocale} from '~/hooks/useLocale';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
@@ -139,44 +141,54 @@ export default function Product() {
     <div className="product">
       {/* <ProductImage image={selectedVariant?.image} /> */}
       <Gallery images={product.images.nodes} />
-      <div className="product-wrapper">
-        <div className="product-main">
-          <div>
-            <h1>{title}</h1>
-            <p style={{marginTop: '8px', color: 'rgb(191, 191, 191)'}}>
-              {printTypeLabel}
-            </p>
-          </div>
-          <ProductPrice
-            price={selectedVariant?.price}
-            compareAtPrice={selectedVariant?.compareAtPrice}
-          />
-          <ProductForm
-            productOptions={productOptions}
-            selectedVariant={selectedVariant}
-          />
+      <motion.div
+        className="product-list-header"
+        initial={{opacity: 0, y: 24}}
+        animate={{opacity: 1, y: 0}}
+        transition={{
+          duration: 0.6,
+          ease: 'easeOut',
+        }}
+      >
+        <div className="product-wrapper">
+          <div className="product-main">
+            <div>
+              <h1>{title}</h1>
+              <p style={{marginTop: '8px', color: 'rgb(191, 191, 191)'}}>
+                {printTypeLabel}
+              </p>
+            </div>
+            <ProductPrice
+              price={selectedVariant?.price}
+              compareAtPrice={selectedVariant?.compareAtPrice}
+            />
+            <ProductForm
+              productOptions={productOptions}
+              selectedVariant={selectedVariant}
+            />
 
-          <div
-            style={{color: 'rgb(191, 191, 191)'}}
-            dangerouslySetInnerHTML={{__html: descriptionHtml}}
-          />
-          <hr className="divider-primary" />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              fontWeight: '500',
-              cursor: 'pointer',
-            }}
-          >
-            {collectionHandle === 'accessories' ? null : (
-              <SizeGuide collectionHandle={collectionHandle} />
-            )}
-            {/* <p>{t.delivery_info}</p> */}
+            <div
+              style={{color: 'rgb(191, 191, 191)'}}
+              dangerouslySetInnerHTML={{__html: descriptionHtml}}
+            />
+            <hr className="divider-primary" />
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                fontWeight: '500',
+                cursor: 'pointer',
+              }}
+            >
+              {collectionHandle === 'accessories' ? null : (
+                <SizeGuide collectionHandle={collectionHandle} />
+              )}
+              {/* <p>{t.delivery_info}</p> */}
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <Analytics.ProductView
         data={{

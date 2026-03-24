@@ -1,5 +1,6 @@
 import Breadcrumbs from '~/components/Breadcrumbs';
 import {useLocale} from '~/hooks/useLocale';
+import {motion} from 'framer-motion';
 
 const AboutUs = () => {
   const {t, language} = useLocale();
@@ -17,11 +18,26 @@ const AboutUs = () => {
             },
           ]}
         />
-        <h1>{t.about_us}</h1>
-        <div
-          style={{display: 'flex', flexDirection: 'column', gap: '16px'}}
-          dangerouslySetInnerHTML={{__html: t.about_us_text}}
-        />
+        <motion.div
+          className="product-list-header"
+          initial={{opacity: 0, y: 24}}
+          animate={{opacity: 1, y: 0}}
+          transition={{
+            duration: 0.6,
+            ease: 'easeOut',
+          }}
+        >
+          <h1>{t.about_us}</h1>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              maxWidth: '800px',
+              gap: '16px',
+            }}
+            dangerouslySetInnerHTML={{__html: t.about_us_text}}
+          />
+        </motion.div>
       </div>
     </div>
   );

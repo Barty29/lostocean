@@ -5,7 +5,7 @@ export const translations = {
   en: {
     home_heading: 'Welcome to the depths',
     shop_now: 'Shop now',
-    about_us: 'About us',
+    about_us: 'About Lost Ocean',
     home_text:
       'A streetwear brand inspired by tattoo art, ocean depth, and modern witchcraft. Made for souls who walk a little darker than the rest. We don’t try to fit in. We wear who we are.',
     label_shirt: 'T-shirt',
@@ -21,7 +21,7 @@ export const translations = {
     contact_text: 'Do you have a question? send us an email at',
     contact_text2: 'we’ll get back to you shortly.',
     faq_heading: "FAQ's",
-    about_us_text: `<p>We are a small family-run brand. A programmer/UI designer and a graphic designer. Everything created under the Lost Ocean name is made by our own hands.</p>
+    about_us_text: `<p>Hi, I'm Barty, and together with Ren, we are the founders of Lost Ocean. We are a small family-run brand. A programmer/UI designer and a graphic designer. Everything created under the Lost Ocean name is made by our own hands.</p>
 <p>From the first ideas, sketches, and drawings to full digital processing.</p>
 <p>Every design has its own story, thought, and deeper meaning. Nothing we create is random, everything is made with emotion, intention, and a personal touch.</p>
 <p>We coded the entire website ourselves, take all our own photos, and handle all customer communication personally. We are a small team, but we care deeply about quality and detail.</p>
@@ -54,7 +54,7 @@ export const translations = {
     home_text:
       'Streetwear značka inšpirovaná tetovaním, hĺbkami oceánu a modernou mágiou. Vytvorená pre duše, ktoré kráčajú o niečo temnejšie než ostatné. Nesnažíme sa zapadnúť. Nosíme to, kým sme.',
     shop_now: 'Nakupovať',
-    about_us: 'O nás',
+    about_us: 'Lost Ocean',
     label_shirt: 'Tričká',
     label_hoodie: 'Mikiny',
     continue_shoping: 'Pokračovať v nákupe',
@@ -68,7 +68,7 @@ export const translations = {
     contact_text: 'Máte otázku? Napíšte nám na',
     contact_text2: 'a čoskoro sa vám ozveme.',
     faq_heading: 'Často kladené otázky',
-    about_us_text: `<p>Sme malá rodinná firma. Programátor / UI dizajnér a grafický dizajnér. Všetko, čo vzniká pod značkou Lost Ocean, tvoríme vlastnými rukami.</p>
+    about_us_text: `<p>Ahoj, som Barty a spolu s Ren sme zakladatelia značky Lost Ocean. Sme malá rodinná firma. Programátor / UI dizajnér a grafický dizajnér. Všetko, čo vzniká pod značkou Lost Ocean, tvoríme vlastnými rukami.</p>
 <p>Od prvotných nápadov, skíc a kresieb, až po digitálne spracovanie.</p>
 <p>Každý náš dizajn má svoj príbeh, myšlienku a hlbší význam. Nič nerobíme len tak, všetko vzniká s emóciou, ideou a osobným dotykom.</p>
 <p>Stránku sme si nakódovali sami, fotky si fotíme sami a rovnako aj komunikáciu so zákazníkmi riešime sami. Sme malý tím, ale o to viac nám záleží na detailoch a kvalite.</p>
