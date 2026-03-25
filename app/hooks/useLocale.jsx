@@ -55,7 +55,8 @@ export const translations = {
     home_text:
       'Streetwear značka inšpirovaná tetovaním, hĺbkami oceánu a modernou mágiou. Vytvorená pre duše, ktoré kráčajú o niečo temnejšie než ostatné. Nesnažíme sa zapadnúť. Nosíme to, kým sme.',
     shop_now: 'Nakupovať',
-    about_us: 'Lost Ocean',
+    about_us: 'O nás',
+    // about_us: 'Lost Ocean',
     label_shirt: 'Tričká',
     label_hoodie: 'Mikiny',
     continue_shoping: 'Pokračovať v nákupe',
