@@ -5,7 +5,8 @@ export const translations = {
   en: {
     home_heading: 'Welcome to the depths',
     shop_now: 'Shop now',
-    about_us: 'About Lost Ocean',
+    about_us: 'About us',
+    // about_us: 'About Lost Ocean',
     home_text:
       'A streetwear brand inspired by tattoo art, ocean depth, and modern witchcraft. Made for souls who walk a little darker than the rest. We don’t try to fit in. We wear who we are.',
     label_shirt: 'T-shirt',
