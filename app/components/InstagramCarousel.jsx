@@ -56,15 +56,28 @@ export default function InstagramCarousel() {
       const vc = getVisibleCount();
       setVisibleCount(vc);
       if (viewportRef.current) {
-        const containerWidth = viewportRef.current.clientWidth;
-        // Total gap space between visible items, divided evenly
-        setItemWidth((containerWidth - GAP * (vc - 1)) / vc);
+        // offsetWidth is more reliable than clientWidth on iOS Safari
+        const containerWidth = viewportRef.current.offsetWidth;
+        if (containerWidth > 0) {
+          setItemWidth((containerWidth - GAP * (vc - 1)) / vc);
+        }
       }
     }
 
-    recalculate();
+    // rAF defers until after first paint — iOS Safari may not have finished
+    // layout when useEffect fires, causing offsetWidth to return 0
+    const rafId = requestAnimationFrame(recalculate);
+
+    // ResizeObserver catches iOS address-bar show/hide that window resize misses
+    const ro = new ResizeObserver(() => requestAnimationFrame(recalculate));
+    if (viewportRef.current) ro.observe(viewportRef.current);
+
     window.addEventListener('resize', recalculate);
-    return () => window.removeEventListener('resize', recalculate);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', recalculate);
+      ro.disconnect();
+    };
   }, []);
 
   // Auto-advance every 4.5 s
@@ -109,7 +122,7 @@ export default function InstagramCarousel() {
         <div
           className="igc__track"
           style={{
-            width: trackWidth > 0 ? `${trackWidth}px` : '200%',
+            width: itemWidth > 0 ? `${trackWidth}px` : '200%',
             transform: `translateX(${translateX}px)`,
             transition: animate
               ? 'transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
