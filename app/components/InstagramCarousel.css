@@ -50,6 +50,7 @@
 /* ─── Sliding track ─────────────────────────────────────────── */
 .igc__track {
   display: flex;
+  align-items: flex-start; /* iOS Safari: stops stretch from collapsing aspect-ratio height */
   will-change: transform;
   /* Width and transform are set via inline styles in JSX */
 }
@@ -58,23 +59,34 @@
 .igc__item {
   flex-shrink: 0;
   display: block;
+  position: relative;        /* contains the absolute image */
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 0;
+  -webkit-transform: translateZ(0); /* force GPU layer on iOS */
+  transform: translateZ(0);
   /* Width and marginRight are set via inline styles in JSX */
 }
 
 /* ─── Image ─────────────────────────────────────────────────── */
 .igc__image {
+  position: absolute;        /* out of flow — let aspect-ratio own the height */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 0;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
   transition: transform 0.45s ease, filter 0.45s ease;
 }
 
 .igc__item:hover .igc__image {
-  transform: scale(1.06);
+  -webkit-transform: translateZ(0) scale(1.06);
+  transform: translateZ(0) scale(1.06);
   filter: brightness(0.82);
 }

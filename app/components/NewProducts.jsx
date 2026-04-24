@@ -18,14 +18,14 @@ const STATIC_PRODUCTS = [
     title: 'Washed Tees', // UPDATE TITLE HERE
     price: '€35.00', // UPDATE PRICE HERE
     imageUrl: photo1, // UPDATE IMAGE HERE
-    url: '/sk/catalog', // UPDATE URL HERE
+    url: '/sk/catalog/t-shirts', // UPDATE URL HERE
   },
   {
     id: 2,
     title: 'Bags', // UPDATE TITLE HERE
     price: '€9.00', // UPDATE PRICE HERE
     imageUrl: photo2, // UPDATE IMAGE HERE
-    url: '/sk/catalog', // UPDATE URL HERE
+    url: '/sk/catalog/accessories', // UPDATE URL HERE
   },
   {
     id: 3,
