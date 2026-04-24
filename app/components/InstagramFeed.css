@@ -1,0 +1,109 @@
+/* Variables */
+:root {
+  --neutral-color-100: #f9f9f9;
+  --neutral-color-500: #303030;
+  --neutral-color-700: #242424;
+  --neutral-color-800: #212121;
+  --neutral-color-900: #1d1d1d;
+  --primary-color: #2e3c50;
+  --primary-color-dark: #1e2835;
+  --primary-color-light: #485d7c;
+  /* --padding-page-desktop: 0 46px;
+  --padding-page-tablet: 0 32px;
+  --padding-page-mobile: 0 16px; */
+  /* font sizes */
+
+  /* OLD */
+  --aside-width: 400px;
+  --cart-aside-summary-height-with-discount: 300px;
+  --cart-aside-summary-height: 250px;
+  --grid-item-width: 355px;
+  --header-height: 100px;
+  --color-dark: #000;
+  --color-light: #fff;
+}
+
+/* ─── Section wrapper ───────────────────────────────────────── */
+.igc {
+  width: 100%;
+  padding: 0;
+  /* background-color: #242424; */
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+.igc-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 0 28px;
+}
+
+.igc-header__icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  color: var(--neutral-color-100);
+}
+
+.igc-header__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.igc-header__handle {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--neutral-color-100);
+  line-height: 1.2;
+}
+
+.igc-header__tagline {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(191, 191, 191);
+  line-height: 1.2;
+}
+
+/* ─── Carousel viewport — clips overflow ─────────────────────── */
+.igc__viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ─── Sliding track ─────────────────────────────────────────── */
+.igc__track {
+  display: flex;
+  will-change: transform;
+  /* Width and transform are set via inline styles in JSX */
+}
+
+/* ─── Individual image cell ─────────────────────────────────── */
+.igc__item {
+  flex-shrink: 0;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 0;
+  /* Width and marginRight are set via inline styles in JSX */
+}
+
+/* ─── Image ─────────────────────────────────────────────────── */
+.igc__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  transition:
+    transform 0.45s ease,
+    filter 0.45s ease;
+}
+
+.igc__item:hover .igc__image {
+  transform: scale(1.06);
+  filter: brightness(0.82);
+}

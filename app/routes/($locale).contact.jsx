@@ -85,7 +85,7 @@ const Contact = () => {
             ease: 'easeOut',
           }}
         >
-          <h1>{t.contact_heading}</h1>
+          <h1 className="np__title">{t.contact_heading}</h1>
 
           <form ref={form} onSubmit={sendEmail} className="contact-form">
             <div style={{display: 'none'}} aria-hidden="true">

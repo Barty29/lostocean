@@ -21,9 +21,15 @@ import productStyles from '~/styles/product.css?url';
 import faqStyles from '~/styles/faq.css?url';
 import commonStyles from '~/styles/common.css?url';
 import contactStyles from '~/styles/contact.css?url';
+import instagramStyles from './components/InstagramFeed.css?url';
+import topProducts from './components/TopProducts.css?url';
+import newProducts from './components/NewProducts.css?url';
+import aboutBrand from './components/AboutBrand.css?url';
+import footerStyles from './components/Footer.css?url';
 import {PageLayout} from './components/PageLayout';
 import {useLocation, Link} from 'react-router';
 import ScrollToTop from './components/ScrollToTop';
+
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
  * @type {ShouldRevalidateFunction}
@@ -166,6 +172,11 @@ export function Layout({children}) {
         <link rel="stylesheet" href={faqStyles}></link>
         <link rel="stylesheet" href={contactStyles}></link>
         <link rel="stylesheet" href={commonStyles}></link>
+        <link rel="stylesheet" href={instagramStyles}></link>
+        <link rel="stylesheet" href={topProducts}></link>
+        <link rel="stylesheet" href={newProducts}></link>
+        <link rel="stylesheet" href={aboutBrand}></link>
+        <link rel="stylesheet" href={footerStyles}></link>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

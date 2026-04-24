@@ -1,15 +1,12 @@
 import {Await, useLoaderData, Link} from 'react-router';
 import {Suspense} from 'react';
-import {Image, Money} from '@shopify/hydrogen';
+import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
 
 // import {translations} from '~/lib/i18n';
 import {useLocale} from '~/hooks/useLocale';
 import SimpleFooter from '~/components/SimpleFooter';
 import InstagramFeed from '~/components/InstagramFeed';
-import TopProducts from '~/components/TopProducts';
-import NewProducts from '~/components/NewProducts';
-import AboutBrand from '~/components/AboutBrand';
 
 /**
  * @type {Route.MetaFunction}
@@ -81,30 +78,18 @@ function loadDeferredData({context}) {
   const recommendedProducts = storefront
     .query(RECOMMENDED_PRODUCTS_QUERY, {
       variables: {
-        country: i18n.country,
-        language: i18n.language,
+        country: i18n.country, // 👈 pridaj krajinu (napr. SK)
+        language: i18n.language, // 👈 pridaj jazyk (napr. SK)
       },
     })
     .catch((error) => {
-      console.error(error);
-      return null;
-    });
-
-  const topProducts = storefront
-    .query(TOP_SELLING_PRODUCTS_QUERY, {
-      variables: {
-        country: i18n.country,
-        language: i18n.language,
-      },
-    })
-    .catch((error) => {
+      // Log query errors, but don't throw them so the page can still render
       console.error(error);
       return null;
     });
 
   return {
     recommendedProducts,
-    topProducts,
   };
 }
 // function loadDeferredData({context}) {
@@ -128,15 +113,10 @@ export default function Homepage() {
   const {t, language} = useLocale();
 
   return (
-    <div>
-      <div className="home-page-layout home-page layout-padding-home">
+    <div className="layout-padding-home">
+      <div className=" home-page-layout">
         <div className="home-content-box">
-          <h1
-            style={{fontSize: '56px', textTransform: 'none'}}
-            className="np__title"
-          >
-            {t.home_heading}
-          </h1>
+          <h1 style={{fontSize: '56px'}}>{t.home_heading}</h1>
           <p style={{marginTop: '8px', color: 'rgb(191, 191, 191)'}}>
             {t.home_text}
           </p>
@@ -159,14 +139,14 @@ export default function Homepage() {
           <Link
             prefetch="intent"
             to={`/${language}/catalog`}
-            className="primary-button hp-link"
+            style={{fontSize: '32px'}}
           >
             {t.shop_now}
           </Link>
           <Link
             prefetch="intent"
             to={`/${language}/about-us`}
-            className="primary-button hp-link"
+            style={{fontSize: '32px'}}
           >
             {t.about_us}
           </Link>
@@ -181,18 +161,10 @@ export default function Homepage() {
             {t.shop_now}
           </Link>
         </div> */}
-        {/* <SimpleFooter /> */}
+        <SimpleFooter />
       </div>
-      <div className="layout-padding-home">
-        <div className="hp-content-layout">
-          <NewProducts products={data.recommendedProducts} />
-          <TopProducts products={data.topProducts} />
-          <AboutBrand />
-          <InstagramFeed />
-        </div>
-      </div>
-
-      {/* <FeaturedCollection collection={data.featuredCollection} /> */}
+      <InstagramFeed />
+      <FeaturedCollection collection={data.featuredCollection} />
       {/* <RecommendedProducts products={data.recommendedProducts} /> */}
     </div>
   );
@@ -305,46 +277,6 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     products(first: 4, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
-      }
-    }
-  }
-`;
-
-const TOP_SELLING_PRODUCTS_QUERY = `#graphql
-  fragment TopProduct on Product {
-    id
-    handle
-    title
-    featuredImage {
-      id
-      altText
-      url
-      width
-      height
-    }
-    images(first: 2) {
-      nodes {
-        id
-        url
-        altText
-        width
-        height
-      }
-    }
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-  }
-  query BestSellersCollection($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    collection(handle: "best_sellers") {
-      products(first: 4) {
-        nodes {
-          ...TopProduct
-        }
       }
     }
   }

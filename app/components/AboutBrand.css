@@ -1,0 +1,220 @@
+/* ─── Section ─────────────────────────────────────────────── */
+.about-brand {
+  display: flex;
+  width: 100%;
+  min-height: 620px;
+  overflow: hidden;
+  /* margin: 50px 0; */
+  padding: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   IMAGE SIDE
+   ═══════════════════════════════════════════════════════════ */
+.about-brand__image-side {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-brand__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transform: scale(1) translateZ(0);
+  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.about-brand__image-side:hover .about-brand__image {
+  transform: scale(1.04) translateZ(0);
+}
+
+/* Premium inner-shadow frame */
+.about-brand__image-side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TEXT SIDE
+   justify-content: space-between stretches the 4 children
+   from top edge to bottom edge — killing the empty space.
+   ═══════════════════════════════════════════════════════════ */
+.about-brand__text-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 52px;
+}
+
+/* ── 1. Meta — top anchor ─────────────────────────────────── */
+.about-brand__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+/* ── 2. Heading ───────────────────────────────────────────── */
+.about-brand__title {
+  margin: 0;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+}
+
+/* Outline line */
+.about-brand__title--outline {
+  display: block;
+  font-size: clamp(72px, 10vw, 150px);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--neutral-color-100, #f9f9f9);
+}
+
+/* Filled line */
+.about-brand__title--filled {
+  display: block;
+  font-size: clamp(72px, 10vw, 150px);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--neutral-color-100, #f9f9f9);
+}
+
+/* ── 3. Copy block ────────────────────────────────────────── */
+.about-brand__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Lead sentence — large, spans full width */
+.about-brand__lead {
+  font-size: clamp(18px, 1.8vw, 26px);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--neutral-color-100, #f9f9f9);
+  margin: 0;
+}
+
+/* Two-column body grid fills horizontal space */
+.about-brand__body-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.about-brand__body {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  color: rgb(160, 160, 160);
+  margin: 0;
+}
+
+/* ── 4. CTA — full-width text link with arrow ─────────────── */
+.about-brand__cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--neutral-color-100, #f9f9f9);
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.about-brand__cta:hover {
+  color: #777;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.about-brand__cta-arrow {
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 0;
+  transition: transform 0.3s ease;
+}
+
+.about-brand__cta:hover .about-brand__cta-arrow {
+  transform: translateX(8px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE  < 768px
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .about-brand {
+    flex-direction: column;
+    min-height: auto;
+    margin: 60px 0;
+  }
+
+  .about-brand__image-side {
+    height: 380px;
+    flex: none;
+  }
+
+  .about-brand__text-side {
+    flex: none;
+    padding: 36px 0;
+    /* Stack top→bottom with a gap instead of space-between */
+    justify-content: flex-start;
+    gap: 28px;
+  }
+
+  .about-brand__body-cols {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .about-brand__title--outline,
+  .about-brand__title--filled {
+    font-size: clamp(60px, 16vw, 90px);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-brand {
+    margin: 40px 0;
+  }
+
+  .about-brand__image-side {
+    height: 280px;
+  }
+
+  .about-brand__text-side {
+    padding: 28px 0;
+    gap: 20px;
+  }
+
+  .about-brand__title--outline,
+  .about-brand__title--filled {
+    font-size: clamp(52px, 18vw, 72px);
+  }
+}

@@ -53,7 +53,7 @@ export function CartMain({layout, cart: originalCart}) {
                   },
                 ]}
               />
-              {cart && <h1>{t.cart}</h1>}
+              {cart && <h1 className="np__title">{t.cart}</h1>}
               <CartEmpty hidden={linesCount} layout={layout} />
               <div className="cart-details-page">
                 <div aria-labelledby="cart-lines">

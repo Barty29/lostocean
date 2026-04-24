@@ -62,7 +62,7 @@ export default function Policy() {
             },
           ]}
         />
-        <h1>{policy.title}</h1>
+        <h1 className="np__title">{policy.title}</h1>
         <div dangerouslySetInnerHTML={{__html: policy.body}} />
       </div>
     </div>

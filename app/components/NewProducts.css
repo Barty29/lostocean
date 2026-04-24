@@ -1,0 +1,293 @@
+/* ─── Section ────────────────────────────────────────────────── */
+.np {
+  width: 100%;
+  padding: 0;
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.np__header {
+  margin-bottom: 28px;
+}
+
+.np__eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.np__title {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+  color: var(--neutral-color-100, #f9f9f9);
+  text-transform: uppercase;
+}
+
+/* ─── Desktop layout ─────────────────────────────────────────
+   Single fixed-height row. Hero takes ~55%, pair takes ~45%.
+   Height is hard-coded — nothing inside can ever resize it.
+
+   ┌────────────────────┬──────────┬──────────┐
+   │                    │          │          │
+   │       HERO         │   p2     │   p3     │  640px
+   │                    │          │          │
+   └────────────────────┴──────────┴──────────┘  */
+.np__layout {
+  display: flex;
+  gap: 6px;
+  height: 640px;
+}
+
+/* Left: hero column (~55% of width) */
+.np__col-hero {
+  flex: 10;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Right: two side cards stacked horizontally (~45% of width) */
+.np__col-pair {
+  flex: 10;
+  min-width: 0;
+  display: flex;
+  gap: 6px;
+}
+
+/* Framer Motion wrapper — owns the flex sizing */
+.np__card-motion {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+}
+
+/* ─── Card — the window frame ─────────────────────────────── */
+.np__card {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  background: #111;
+}
+
+/* ─── Window — clips the zoom ────────────────────────────────
+   position: absolute; inset: 0 → fills card completely
+   overflow: hidden             → THE clip boundary for scale  */
+.np__window {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* ─── Image — fully outside layout flow ─────────────────────
+   position: absolute → zero box-model impact, ever
+   translateZ(0) on both states → GPU layer from start,
+     prevents the CPU→GPU flash that causes neighbour shift    */
+.np__window img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+  transform: scale(1) translateZ(0);
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.np__card:hover .np__window img {
+  transform: scale(1.05) translateZ(0);
+}
+
+.np__placeholder {
+  position: absolute;
+  inset: 0;
+  background: #1a1a1a;
+}
+
+/* ─── Content overlay ────────────────────────────────────────
+   position: absolute on card → spans full card area
+   pointer-events: none → <Link> handles all clicks            */
+.np__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ─── Badge ──────────────────────────────────────────────── */
+.np__badge {
+  align-self: flex-start;
+  margin: 14px 0 0 14px;
+  background: #fff;
+  color: #000;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+}
+
+/* ─── Info (gradient + text) ─────────────────────────────── */
+.np__info {
+  padding: 56px 14px 14px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, transparent 100%);
+}
+
+.np__name {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 3px;
+  line-height: 1.2;
+  transform: translateY(0) translateZ(0);
+  transition: transform 0.35s ease;
+  will-change: transform;
+}
+
+/* Hero card gets a larger title */
+.np__col-hero .np__name {
+  font-size: 20px;
+}
+
+.np__card:hover .np__name {
+  transform: translateY(-4px) translateZ(0);
+}
+
+.np__price {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  transform: translateY(0) translateZ(0);
+  transition: transform 0.35s ease 0.04s;
+  will-change: transform;
+}
+
+.np__card:hover .np__price {
+  transform: translateY(-4px) translateZ(0);
+}
+
+.np__cta {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-top: 7px;
+  opacity: 0;
+  transform: translateY(6px) translateZ(0);
+  transition:
+    opacity 0.35s ease 0.06s,
+    transform 0.35s ease 0.06s;
+  will-change: transform, opacity;
+}
+
+.np__card:hover .np__cta {
+  opacity: 1;
+  transform: translateY(-4px) translateZ(0);
+}
+
+/* ─── Tablet: hero full width, pair below ───────────────────
+   Flex switches to column. Fixed heights keep layout stable.  */
+@media (max-width: 900px) {
+  .np__layout {
+    flex-direction: column;
+    height: auto;
+    gap: 4px;
+  }
+
+  .np__col-hero {
+    flex: none;
+    height: 380px;
+  }
+
+  .np__col-pair {
+    flex: none;
+    height: 260px;
+  }
+
+  .np__col-hero .np__name {
+    font-size: 16px;
+  }
+}
+
+/* ─── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .np {
+    /* padding: 40px 0; */
+  }
+
+  .np__title {
+    font-size: 28px;
+  }
+
+  .np__layout {
+    gap: 3px;
+  }
+
+  .np__col-hero {
+    height: 280px;
+  }
+
+  .np__col-pair {
+    height: 180px;
+    gap: 3px;
+  }
+
+  .np__col-hero .np__name {
+    font-size: 14px;
+  }
+
+  .np__badge {
+    margin: 8px 0 0 8px;
+    font-size: 7px;
+    padding: 3px 7px;
+  }
+
+  .np__info {
+    padding: 36px 10px 10px;
+  }
+
+  .np__name {
+    font-size: 10px;
+  }
+
+  .np__cta {
+    display: none;
+  }
+}
+
+/* ─── Skeleton ───────────────────────────────────────────── */
+.np__skeleton {
+  width: 100%;
+  height: 640px;
+  background: #111;
+}
+
+@media (max-width: 900px) {
+  .np__skeleton {
+    height: 644px; /* 380px + 4px + 260px */
+  }
+}

@@ -1,0 +1,17 @@
+.top-products {
+  width: 100%;
+  padding: 0;
+}
+
+.top-products__heading {
+  font-size: 34px;
+  font-weight: 400;
+  margin: 0px;
+  margin: 0 0 24px;
+  color: var(--neutral-color-100, #f9f9f9);
+}
+
+.top-products__loading {
+  width: 100%;
+  height: 200px;
+}

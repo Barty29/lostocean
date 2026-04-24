@@ -1,5 +1,11 @@
 import {Suspense} from 'react';
-import {Await, NavLink, useAsyncValue, useLocation} from 'react-router';
+import {
+  Await,
+  NavLink,
+  useAsyncValue,
+  useLocation,
+  useNavigate,
+} from 'react-router';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import {useLocale} from '~/hooks/useLocale';
@@ -78,7 +84,15 @@ const navLinks = [
 ];
 export function HeaderMenu({menu, primaryDomainUrl, publicStoreDomain}) {
   const {close} = useAside();
-  const {t, language} = useLocale();
+  const {t, language, changeLanguage} = useLocale();
+  const {pathname, search} = useLocation();
+  const navigate = useNavigate();
+
+  const changeLang = (code) => {
+    const pathWithoutLocale = pathname.replace(/^\/(en|sk)(?=\/|$)/, '');
+    changeLanguage(code);
+    navigate(`/${code}${pathWithoutLocale}${search}`, {replace: false});
+  };
 
   return (
     <nav className="header-aside-menu" role="navigation">
@@ -110,34 +124,47 @@ export function HeaderMenu({menu, primaryDomainUrl, publicStoreDomain}) {
         })}
       </div>
 
-      <div
-        className="header-menu-item"
-        style={{
-          display: 'flex',
-          // flexDirection: 'column',
-          gap: '1rem',
-        }}
-      >
-        <a
-          href="https://www.instagram.com/lostoceanclth/"
-          target="_blank"
-          className="social-text"
-        >
-          <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-            <img src={InstagramIcon} alt="instagram-icon" width="24px" />
+      <div className="menu-bottom">
+        {/* Language switcher */}
+        <div className="menu-lang">
+          <button
+            onClick={() => changeLang('en')}
+            disabled={language === 'en'}
+            className={`menu-lang__btn${language === 'en' ? ' menu-lang__btn--active' : ''}`}
+          >
+            EN
+          </button>
+          <span className="menu-lang__divider">/</span>
+          <button
+            onClick={() => changeLang('sk')}
+            disabled={language === 'sk'}
+            className={`menu-lang__btn${language === 'sk' ? ' menu-lang__btn--active' : ''}`}
+          >
+            SK
+          </button>
+        </div>
+
+        {/* Social links */}
+        <div className="menu-social">
+          <a
+            href="https://www.instagram.com/lostoceanclth/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="menu-social__link"
+          >
+            <img src={InstagramIcon} alt="Instagram" width="22px" />
             Instagram
-          </div>
-        </a>
-        <a
-          href="https://www.instagram.com/lostoceanclth/"
-          target="_blank"
-          className="social-text"
-        >
-          <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-            <img src={FacebookIcon} alt="facebook-icon" width="24px" />
+          </a>
+          <a
+            href="https://www.facebook.com/profile.php?id=61586088478610"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="menu-social__link"
+          >
+            <img src={FacebookIcon} alt="Facebook" width="22px" />
             Facebook
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </nav>
   );

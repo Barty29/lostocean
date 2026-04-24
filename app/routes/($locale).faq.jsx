@@ -18,7 +18,7 @@ const Faq = () => {
             },
           ]}
         />
-        <h1>{t.faq_heading}</h1>
+        <h1 className="np__title">{t.faq_heading}</h1>
         <div style={{display: 'flex', flexDirection: 'column', gap: '16px'}}>
           <Qustions
             questionSK="Akú veľkosť si mám vybrať?"

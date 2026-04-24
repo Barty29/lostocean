@@ -49,6 +49,16 @@ export const translations = {
     send: 'Send',
     success: 'Your message has been sent successfully!',
     error_sending_message: 'Error sending message. Please try again later.',
+    hp_about_us: 'More about us',
+    hp_about_us_text:
+      'Every design starts on paper. Hand-drawn, carefully considered, then translated into a digital form and brought to life as a final product. We use premium cotton, with a large part of our products made from eco organic fabrics. We focus on quality craftsmanship, heavyweight materials, and cuts that fit well, from classic to oversized. When I couldn’t find anything I truly connected with, I had to create it myself. The world teaches you to fit in. No one teaches you to be yourself. There’s nothing wrong with being different. What’s wrong is hiding it. Be yourself. Lost Ocean is for those who aren’t afraid to show the world who they really are.',
+    hp_about_us_subheading:
+      'Made for souls who walk a little darker than the rest.',
+    hp_news_heading: 'Just Dropped',
+    hp_news_subheading: 'New Arrivals',
+    hp_trending_subheading: 'Trending now',
+    hp_trending_title: 'Best Sellers',
+    hp_instagram: 'Follow Us on Instagram',
   },
   sk: {
     home_heading: 'Vitaj v hlbinách',
@@ -97,6 +107,16 @@ export const translations = {
     send: 'Odoslať',
     success: 'Vaša správa bola úspešne odoslaná!',
     error_sending_message: 'Chyba pri odosielaní. Skúste to neskôr.',
+    hp_about_us: 'Viac o nás',
+    hp_about_us_text:
+      'Každý dizajn začína na papieri. Je ručne kreslený, premyslený a následne prenesený do digitálnej podoby a na finálny produkt. Používame prémiovú bavlnu a veľká časť našich produktov je vyrobená z eco bio bavlny. Zameriavame sa na kvalitné spracovanie, heavyweight materiály a strihy, ktoré dobre sedia. Od klasických až po oversized. Keď som nenašiel nič, s čím by som sa vedel stotožniť, musel som si to vytvoriť. Celý svet ťa učí zapadnúť. Nikto ťa neučí byť sám sebou. Nie je nič zlé na tom byť iný. Zlé je to skrývať. Buď sám sebou. Lost Ocean je pre tých, ktorí sa neboja ukázať svetu, kým naozaj sú.',
+    hp_about_us_subheading:
+      'Vytvorená pre duše, ktoré kráčajú o niečo temnejšie než ostatné.',
+    hp_news_heading: 'Nový drop',
+    hp_news_subheading: 'Novinky',
+    hp_trending_subheading: 'Najpredávanejšie',
+    hp_trending_title: 'Najobľúbenejšie',
+    hp_instagram: 'Sleduj nás na Instagrame',
   },
 };
 

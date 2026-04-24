@@ -153,7 +153,12 @@ export default function Product() {
         <div className="product-wrapper">
           <div className="product-main">
             <div>
-              <h1>{title}</h1>
+              <h1
+                className="np__title"
+                // style={{fontSize: '56px', textTransform: 'none'}}
+              >
+                {title}
+              </h1>
               <p style={{marginTop: '8px', color: 'rgb(191, 191, 191)'}}>
                 {printTypeLabel}
               </p>

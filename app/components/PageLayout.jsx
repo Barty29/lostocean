@@ -36,11 +36,7 @@ export function PageLayout({
       )}
       <main>{children}</main>
       {/* <SimpleFooter /> */}
-      {/* <Footer
-        footer={footer}
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-      /> */}
+      <Footer />
     </Aside.Provider>
   );
 }

@@ -110,7 +110,8 @@ export default function Collection() {
         />
 
         <div>
-          <h1>{t.catalog_heading}</h1>
+          <h2 className="np__title">{t.catalog_heading}</h2>
+
           <p style={{marginTop: '8px'}}>{t.catalog_description}</p>
         </div>
         <div className="filter">

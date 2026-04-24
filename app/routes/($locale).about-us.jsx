@@ -27,7 +27,7 @@ const AboutUs = () => {
             ease: 'easeOut',
           }}
         >
-          <h1>{t.about_us}</h1>
+          <h1 className="np__title">{t.about_us}</h1>
           <div
             style={{
               display: 'flex',
