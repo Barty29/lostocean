@@ -4,6 +4,7 @@ import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
 import SimpleFooter from '~/components/SimpleFooter';
 import {Header, HeaderMenu} from '~/components/Header';
+import AnnouncementBar from '~/components/AnnouncementBar';
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -26,6 +27,7 @@ export function PageLayout({
     <Aside.Provider>
       <CartAside cart={cart} />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      <AnnouncementBar />
       {header && (
         <Header
           header={header}

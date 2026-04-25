@@ -59,6 +59,7 @@ export const translations = {
     hp_trending_subheading: 'Trending now',
     hp_trending_title: 'Best Sellers',
     hp_instagram: 'Follow Us on Instagram',
+    announcement_text: 'Get 10% off your first order. Use code:',
   },
   sk: {
     home_heading: 'Vitaj v hlbinách',
@@ -117,6 +118,7 @@ export const translations = {
     hp_trending_subheading: 'Najpredávanejšie',
     hp_trending_title: 'Najobľúbenejšie',
     hp_instagram: 'Sleduj nás na Instagrame',
+    announcement_text: 'Získaj 10% zľavu na svoj prvý nákup. Použi kód:',
   },
 };
 

@@ -25,6 +25,7 @@ import instagramStyles from './components/InstagramFeed.css?url';
 import topProducts from './components/TopProducts.css?url';
 import newProducts from './components/NewProducts.css?url';
 import aboutBrand from './components/AboutBrand.css?url';
+import announcementBar from './components/AnnouncementBar.css?url';
 import footerStyles from './components/Footer.css?url';
 import {PageLayout} from './components/PageLayout';
 import {useLocation, Link} from 'react-router';
@@ -176,6 +177,7 @@ export function Layout({children}) {
         <link rel="stylesheet" href={topProducts}></link>
         <link rel="stylesheet" href={newProducts}></link>
         <link rel="stylesheet" href={aboutBrand}></link>
+        <link rel="stylesheet" href={announcementBar}></link>
         <link rel="stylesheet" href={footerStyles}></link>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
