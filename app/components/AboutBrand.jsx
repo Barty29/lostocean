@@ -4,7 +4,8 @@ import {useLocale} from '~/hooks/useLocale';
 import './AboutBrand.css';
 
 // ─── UPDATE THIS IMAGE ────────────────────────────────────────
-import brandImage from '../assets/bg-new-2.jpeg';
+// import brandImage from '../assets/bg-new-2.jpeg';
+import brandImage from '../assets/brand2.jpg';
 // ─────────────────────────────────────────────────────────────
 
 export default function AboutBrand() {
