@@ -6,6 +6,26 @@ import {motion} from 'framer-motion';
 import {useVariantUrl} from '~/lib/variants';
 import {useLocale} from '~/hooks/useLocale';
 
+function getProductBadge(product) {
+  const handles = product?.collections?.nodes?.map((c) => c.handle) ?? [];
+
+  if (handles.includes('accessories')) return 'BAG';
+
+  // 'hoodies' = EN, 'mikiny' = SK
+  if (handles.includes('hoodies') || handles.includes('mikiny'))
+    return 'HOODIE';
+
+  // 't-shirts' = EN, 'tricka' = SK — sub-collection handles are the same in both locales
+  if (handles.includes('t-shirts') || handles.includes('tricka')) {
+    if (handles.includes('kids-t-shirt')) return 'KIDS';
+    if (handles.includes('oversized-t-shirts')) return 'OVERSIZED';
+    if (handles.includes('washed-t-shirts')) return 'WASHED';
+    return 'REGULAR';
+  }
+
+  return null;
+}
+
 /**
  * @param {{
  *   product:
@@ -27,6 +47,7 @@ export function ProductItem({product, loading}) {
 
   const img1 = product?.images?.nodes?.[0] || product.featuredImage;
   const img2 = product?.images?.nodes?.[1];
+  const badge = getProductBadge(product);
 
   return (
     <motion.div
@@ -42,6 +63,8 @@ export function ProductItem({product, loading}) {
         onMouseLeave={() => setIsHover(false)}
       >
         <div className="product-item-imageWrap">
+          {badge && <span className="product-item-badge">{badge}</span>}
+          {/* <span className="product-item-badge">BADGE</span> */}
           {/* SSR / pred hydratáciou: renderuj len prvý obrázok (stabilné) */}
           {!mounted ? (
             img1 && (

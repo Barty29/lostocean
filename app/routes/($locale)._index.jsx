@@ -337,6 +337,11 @@ const TOP_SELLING_PRODUCTS_QUERY = `#graphql
         currencyCode
       }
     }
+    collections(first: 5) {
+      nodes {
+        handle
+      }
+    }
   }
   query BestSellersCollection($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {

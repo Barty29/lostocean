@@ -1,43 +1,24 @@
 import {Suspense} from 'react';
-import {Await, useLoaderData, Link} from 'react-router';
+import {Await, useLoaderData} from 'react-router';
 import {ProductItem} from '~/components/ProductItem';
-import {useLocale} from '~/hooks/useLocale';
-import Breadcrumbs from '~/components/Breadcrumbs';
 
-/**
- * @type {Route.MetaFunction}
- */
 export const meta = ({params}) => {
   const language = params.locale || 'en';
-
   const title =
     language === 'sk' ? 'Produkty | Lost Ocean' : 'Products | Lost Ocean';
-
   return [{title}];
 };
 
-/**
- * @param {Route.LoaderArgs} args
- */
 export async function loader(args) {
   const deferredData = loadDeferredData(args);
   const criticalData = await loadCriticalData(args);
-
   return {...deferredData, ...criticalData};
 }
 
-/**
- * Tu nechávame len veci, ktoré majú byť hneď.
- * @param {Route.LoaderArgs}
- */
 async function loadCriticalData() {
   return {};
 }
 
-/**
- * Produkty načítame deferred, aby sa mohol zobraziť skeleton.
- * @param {Route.LoaderArgs}
- */
 function loadDeferredData({context}) {
   const {storefront} = context;
 
@@ -48,107 +29,47 @@ function loadDeferredData({context}) {
         language: storefront.i18n.language,
       },
     })
-    .then(({collections}) => {
-      const desiredOrder = ['t-shirts', 'hoodies', 'accessories'];
-
-      const sortedCollections = collections.nodes
-        .filter((collection) => desiredOrder.includes(collection.handle))
-        .sort(
-          (a, b) =>
-            desiredOrder.indexOf(a.handle) - desiredOrder.indexOf(b.handle),
-        );
-
-      return sortedCollections;
+    .then(({tshirts, hoodies, accessories, kids}) => {
+      return [tshirts, hoodies, accessories, kids].filter(Boolean);
     });
 
   return {collections};
 }
 
-// function loadDeferredData({context}) {
-//   const {storefront} = context;
-
-//   const collections = storefront
-//     .query(CATALOG_COLLECTIONS_QUERY, {
-//       variables: {
-//         country: storefront.i18n.country,
-//         language: storefront.i18n.language,
-//       },
-//     })
-//     .then(async ({collections}) => {
-//       // 2 sekundový delay aby bol viditeľný skeleton
-//       await new Promise((resolve) => setTimeout(resolve, 2000));
-
-//       const desiredOrder = ['t-shirts', 'hoodies', 'accessories'];
-
-//       const sortedCollections = collections.nodes
-//         .filter((collection) => desiredOrder.includes(collection.handle))
-//         .sort(
-//           (a, b) =>
-//             desiredOrder.indexOf(a.handle) - desiredOrder.indexOf(b.handle),
-//         );
-
-//       return sortedCollections;
-//     });
-
-//   return {collections};
-// }
-
 export default function Collection() {
   const {collections} = useLoaderData();
-  const {t, language} = useLocale();
 
   return (
-    <div className="layout-padding">
-      <div className="product-list-header">
-        <Breadcrumbs
-          links={[
-            {label: 'Home', labelSk: 'Domov', to: `/${language}`},
-            {
-              label: 'Catalog',
-              labelSk: 'Katalóg',
-              to: `/${language}/catalog`,
-            },
-          ]}
-        />
-        <div>
-          <h2 className="np__title">{t.catalog_heading}</h2>
-          <p style={{marginTop: '8px'}}>{t.catalog_description}</p>
-        </div>
+    <Suspense fallback={<ProductsSkeleton />}>
+      <Await resolve={collections}>
+        {(resolvedCollections) => {
+          const seen = new Set();
+          const products = [];
+          for (const collection of resolvedCollections) {
+            for (const product of collection.products.nodes) {
+              if (!seen.has(product.id)) {
+                seen.add(product.id);
+                products.push(product);
+              }
+            }
+          }
 
-        <div className="filter">
-          <FilterBox label={t.filter_label_all} url="catalog" active={true} />
-          <FilterBox label={t.filter_label_tshirts} url="t-shirts" />
-          <FilterBox label={t.filter_label_hoodies} url="hoodies" />
-          <FilterBox label={t.filter_label_accessories} url="accessories" />
-        </div>
-      </div>
-
-      <hr className="divider" />
-
-      <Suspense fallback={<ProductsSkeleton />}>
-        <Await resolve={collections}>
-          {(resolvedCollections) => {
-            const products = resolvedCollections.flatMap(
-              (collection) => collection.products.nodes,
-            );
-
-            return (
-              <div style={{marginBottom: '48px'}}>
-                <div className="products-grid">
-                  {products.map((product, index) => (
-                    <ProductItem
-                      key={product.id}
-                      product={product}
-                      loading={index < 6 ? 'eager' : undefined}
-                    />
-                  ))}
-                </div>
+          return (
+            <div style={{marginBottom: '48px'}}>
+              <div className="products-grid">
+                {products.map((product, index) => (
+                  <ProductItem
+                    key={product.id}
+                    product={product}
+                    loading={index < 6 ? 'eager' : undefined}
+                  />
+                ))}
               </div>
-            );
-          }}
-        </Await>
-      </Suspense>
-    </div>
+            </div>
+          );
+        }}
+      </Await>
+    </Suspense>
   );
 }
 
@@ -167,21 +88,6 @@ function ProductsSkeleton() {
     </div>
   );
 }
-
-const FilterBox = ({label, active, url}) => {
-  const {language} = useLocale();
-
-  const fullUrl =
-    url === 'catalog' ? `/${language}/catalog` : `/${language}/catalog/${url}`;
-
-  const className = active ? 'filter-box--active' : 'filter-box';
-
-  return (
-    <Link to={fullUrl} className={className}>
-      <h3>{label}</h3>
-    </Link>
-  );
-};
 
 const COLLECTION_ITEM_FRAGMENT = `#graphql
   fragment MoneyCollectionItem on MoneyV2 {
@@ -216,6 +122,11 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
         ...MoneyCollectionItem
       }
     }
+    collections(first: 5) {
+      nodes {
+        handle
+      }
+    }
   }
 `;
 
@@ -224,15 +135,43 @@ const CATALOG_COLLECTIONS_QUERY = `#graphql
     $country: CountryCode
     $language: LanguageCode
   ) @inContext(country: $country, language: $language) {
-    collections(first: 20) {
-      nodes {
-        id
-        handle
-        title
-        products(first: 100) {
-          nodes {
-            ...CollectionItem
-          }
+    tshirts: collection(handle: "t-shirts") {
+      id
+      handle
+      title
+      products(first: 100) {
+        nodes {
+          ...CollectionItem
+        }
+      }
+    }
+    hoodies: collection(handle: "hoodies") {
+      id
+      handle
+      title
+      products(first: 100) {
+        nodes {
+          ...CollectionItem
+        }
+      }
+    }
+    accessories: collection(handle: "accessories") {
+      id
+      handle
+      title
+      products(first: 100) {
+        nodes {
+          ...CollectionItem
+        }
+      }
+    }
+    kids: collection(handle: "kids-t-shirt") {
+      id
+      handle
+      title
+      products(first: 100) {
+        nodes {
+          ...CollectionItem
         }
       }
     }
@@ -241,5 +180,4 @@ const CATALOG_COLLECTIONS_QUERY = `#graphql
 `;
 
 /** @typedef {import('./+types/collections.all').Route} Route */
-/** @typedef {import('storefrontapi.generated').CollectionItemFragment} CollectionItemFragment */
 /** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */

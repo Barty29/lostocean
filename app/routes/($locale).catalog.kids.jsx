@@ -4,8 +4,7 @@ import {ProductItem} from '~/components/ProductItem';
 
 export const meta = ({params}) => {
   const language = params.locale || 'en';
-  const title =
-    language === 'sk' ? 'Doplnky | Lost Ocean' : 'Accessories | Lost Ocean';
+  const title = language === 'sk' ? 'Deti | Lost Ocean' : 'Kids | Lost Ocean';
   return [{title}];
 };
 
@@ -22,7 +21,7 @@ async function loadCriticalData({context, request}) {
   const [{collection}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {
-        handle: 'accessories',
+        handle: 'kids-t-shirt',
         ...paginationVariables,
         country: storefront.i18n.country,
         language: storefront.i18n.language,

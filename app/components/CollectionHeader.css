@@ -1,0 +1,37 @@
+/* ── Collection page header ───────────────────────────────── */
+.collection-header {
+  width: 100%;
+  margin-top: calc(var(--header-height) + var(--bar-h, 0px));
+  transition: margin-top 0.32s ease;
+  padding: 32px 46px 0;
+  box-sizing: border-box;
+}
+
+/* Breadcrumbs normally carry margin-top: 132px to clear the fixed header.
+   Here the component already sits below the header via margin-top above. */
+.collection-header .breadcrumbs {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+/* ── Description ──────────────────────────────────────────── */
+.collection-header__desc {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(249, 249, 249, 0.68);
+}
+
+/* ── Tablet ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .collection-header {
+    padding: 28px 32px 0;
+  }
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .collection-header {
+    padding: 20px 16px 0;
+  }
+}
