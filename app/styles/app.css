@@ -666,11 +666,16 @@ html.bar-open {
 .tfa-ring--active {
   background: linear-gradient(
     45deg,
-    #f09433 0%,
+    /* #f09433 0%,
     #e6683c 25%,
     #dc2743 50%,
     #cc2366 75%,
-    #bc1888 100%
+    #bc1888 100% */
+      #c2d4f2 0%,
+    #9fb8df 25%,
+    #7896c4 50%,
+    #5d78a3 75%,
+    #485d7c 100%
   );
 }
 
@@ -706,11 +711,11 @@ html.bar-open {
 .tfa-item:hover .tfa-ring {
   background: linear-gradient(
     45deg,
-    #f09433 0%,
-    #e6683c 25%,
-    #dc2743 50%,
-    #cc2366 75%,
-    #bc1888 100%
+    #c2d4f2 0%,
+    #9fb8df 25%,
+    #7896c4 50%,
+    #5d78a3 75%,
+    #485d7c 100%
   );
 }
 
