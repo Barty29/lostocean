@@ -9,7 +9,10 @@ import {useLocale} from '~/hooks/useLocale';
 function getProductBadge(product) {
   const handles = product?.collections?.nodes?.map((c) => c.handle) ?? [];
 
-  if (handles.includes('accessories')) return 'BAG';
+  if (handles.includes('accessories')) {
+    if (handles.includes('hat')) return 'HAT';
+    return 'BAG';
+  }
 
   // 'hoodies' = EN, 'mikiny' = SK
   if (handles.includes('hoodies') || handles.includes('mikiny'))
