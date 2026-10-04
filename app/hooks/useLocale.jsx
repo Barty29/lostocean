@@ -35,6 +35,7 @@ export const translations = {
     filter_label_all: 'All',
     filter_label_tshirts: 'T-shirts',
     filter_label_hoodies: 'Hoodies',
+    filter_label_sweatshirts: 'Sweatshirts',
     filter_label_accessories: 'Accessories',
     filter_label_kids: 'Kids',
     add_to_cart: 'Add to cart',
@@ -68,6 +69,7 @@ export const translations = {
     catalog_heading_oversized: 'OVERSIZED T-SHIRTS',
     catalog_heading_kids: 'FUTURE GENERATION',
     catalog_heading_hoodies: 'HOODIES',
+    catalog_heading_sweatshirts: 'SWEATSHIRTS',
     catalog_heading_accessories: 'ACCESSORIES',
   },
   sk: {
@@ -103,6 +105,7 @@ export const translations = {
     filter_label_all: 'Všetko',
     filter_label_tshirts: 'Tričká',
     filter_label_hoodies: 'Mikiny',
+    filter_label_sweatshirts: 'Svetre',
     filter_label_accessories: 'Doplnky',
     filter_label_kids: 'Deti',
     add_to_cart: 'Pridať do košíka',
@@ -136,6 +139,7 @@ export const translations = {
     catalog_heading_oversized: 'Oversized tričká',
     catalog_heading_kids: 'Budúca generácia',
     catalog_heading_hoodies: 'Mikiny',
+    catalog_heading_sweatshirts: 'Svetre',
     catalog_heading_accessories: 'Doplnky',
   },
 };

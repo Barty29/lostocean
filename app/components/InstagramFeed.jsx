@@ -3,68 +3,75 @@ import {useState, useEffect, useRef} from 'react';
 import InstagramPhoto from '../assets/instagram/instagram_01.jpg';
 import InstagramPhoto2 from '../assets/instagram/instagram_02.jpg';
 import InstagramPhoto3 from '../assets/instagram/instagram_03.jpg';
-import InstagramPhoto4 from '../assets/instagram/instagram_04.jpg';
+import InstagramPhoto4 from '../assets/instagram/instagram_04.jpeg';
 import InstagramPhoto5 from '../assets/instagram/instagram_05.jpg';
 import InstagramPhoto6 from '../assets/instagram/instagram_06.jpg';
 import InstagramPhoto7 from '../assets/instagram/instagram_07.jpg';
 import InstagramPhoto8 from '../assets/instagram/instagram_08.jpg';
 import InstagramPhoto9 from '../assets/instagram/instagram_09.jpg';
 import InstagramPhoto10 from '../assets/instagram/instagram_10.jpg';
+import InstagramPhoto11 from '../assets/instagram/instagram_11.jpg';
 
 import {useLocale} from '~/hooks/useLocale';
 
+const INSTAGRAM_URL = 'https://www.instagram.com/lostoceanclth/';
 const GAP = 8; // px — must match CSS if overridden
 
 const posts = [
   {
     id: 1,
     imageUrl: InstagramPhoto,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 2,
     imageUrl: InstagramPhoto2,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 3,
     imageUrl: InstagramPhoto3,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 4,
     imageUrl: InstagramPhoto4,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 5,
     imageUrl: InstagramPhoto5,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 6,
     imageUrl: InstagramPhoto6,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 7,
     imageUrl: InstagramPhoto7,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 8,
     imageUrl: InstagramPhoto8,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 9,
     imageUrl: InstagramPhoto9,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
   },
   {
     id: 10,
     imageUrl: InstagramPhoto10,
-    postUrl: 'https://www.instagram.com',
+    postUrl: INSTAGRAM_URL,
+  },
+  {
+    id: 11,
+    imageUrl: InstagramPhoto11,
+    postUrl: INSTAGRAM_URL,
   },
 ];
 

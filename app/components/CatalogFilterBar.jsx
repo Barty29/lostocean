@@ -8,6 +8,7 @@ import oversizedImg from '../assets/collection/avatar_oversized1.jpg';
 import allImg from '../assets/collection/avatar_all.jpg';
 import tshirtsImg from '../assets/collection/avatar_tee.jpg';
 import hoodiesImg from '../assets/collection/avatar_hoodie.jpg';
+import sweatshirtsImg from '../assets/collection/sweatshirts.jpg';
 import accessoriesImg from '../assets/collection/avatar_accessories.jpg';
 import kidsImg from '../assets/collection/avatar_kids.jpg';
 
@@ -95,6 +96,14 @@ export default function CatalogFilterBar({activeCatalog}) {
             url="hoodies"
             image={hoodiesImg}
             active={activeCatalog === 'hoodies'}
+          />
+        </motion.div>
+        <motion.div layout="position" transition={LAYOUT_TRANSITION} key="sweatshirts" style={{flexShrink: 0}}>
+          <FilterAvatar
+            label={t.filter_label_sweatshirts}
+            url="sweatshirts"
+            image={sweatshirtsImg}
+            active={activeCatalog === 'sweatshirts'}
           />
         </motion.div>
         <motion.div layout="position" transition={LAYOUT_TRANSITION} key="accessories" style={{flexShrink: 0}}>

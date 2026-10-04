@@ -44,6 +44,7 @@ function LangSwitcher() {
 const SHOP_LINKS = [
   {label: 'All Items', to: 'catalog'},
   {label: 'Hoodies', to: 'catalog/hoodies'},
+  {label: 'Sweatshirts', to: 'catalog/sweatshirts'},
   {label: 'T-shirts', to: 'catalog/t-shirts'},
   {label: 'Accessories', to: 'catalog/accessories'},
 ];

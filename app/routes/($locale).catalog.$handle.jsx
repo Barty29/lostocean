@@ -98,6 +98,15 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
         ...MoneyProductItem
       }
     }
+    options(first: 3) {
+      name
+      optionValues {
+        name
+        swatch {
+          color
+        }
+      }
+    }
     collections(first: 5) {
       nodes {
         handle

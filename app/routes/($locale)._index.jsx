@@ -337,6 +337,15 @@ const TOP_SELLING_PRODUCTS_QUERY = `#graphql
         currencyCode
       }
     }
+    options(first: 3) {
+      name
+      optionValues {
+        name
+        swatch {
+          color
+        }
+      }
+    }
     collections(first: 5) {
       nodes {
         handle

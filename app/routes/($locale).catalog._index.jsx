@@ -29,8 +29,8 @@ function loadDeferredData({context}) {
         language: storefront.i18n.language,
       },
     })
-    .then(({tshirts, hoodies, accessories, kids}) => {
-      return [tshirts, hoodies, accessories, kids].filter(Boolean);
+    .then(({tshirts, hoodies, sweatshirts, accessories, kids}) => {
+      return [tshirts, hoodies, sweatshirts, accessories, kids].filter(Boolean);
     });
 
   return {collections};
@@ -122,6 +122,15 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
         ...MoneyCollectionItem
       }
     }
+    options(first: 3) {
+      name
+      optionValues {
+        name
+        swatch {
+          color
+        }
+      }
+    }
     collections(first: 5) {
       nodes {
         handle
@@ -146,6 +155,16 @@ const CATALOG_COLLECTIONS_QUERY = `#graphql
       }
     }
     hoodies: collection(handle: "hoodies") {
+      id
+      handle
+      title
+      products(first: 100) {
+        nodes {
+          ...CollectionItem
+        }
+      }
+    }
+    sweatshirts: collection(handle: "sweatshirts") {
       id
       handle
       title

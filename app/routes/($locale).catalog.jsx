@@ -6,6 +6,7 @@ import CatalogFilterBar from '~/components/CatalogFilterBar';
 function getActiveCatalog(pathname) {
   if (/\/catalog\/t-shirts/.test(pathname)) return 't-shirts';
   if (/\/catalog\/hoodies/.test(pathname)) return 'hoodies';
+  if (/\/catalog\/sweatshirts/.test(pathname)) return 'sweatshirts';
   if (/\/catalog\/accessories/.test(pathname)) return 'accessories';
   if (/\/catalog\/kids/.test(pathname)) return 'kids';
   if (/\/catalog\/.+/.test(pathname)) return 'other';
@@ -33,6 +34,8 @@ export default function CatalogLayout() {
     title = typeHeadings[activeType] ?? t.catalog_heading_tshirts;
   } else if (activeCatalog === 'hoodies') {
     title = t.catalog_heading_hoodies;
+  } else if (activeCatalog === 'sweatshirts') {
+    title = t.catalog_heading_sweatshirts;
   } else if (activeCatalog === 'accessories') {
     title = t.catalog_heading_accessories;
   } else if (activeCatalog === 'kids') {

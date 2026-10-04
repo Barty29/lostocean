@@ -9,7 +9,7 @@ import {useLocale} from '~/hooks/useLocale';
 
 import photo1 from '../assets/instagram/news_02.jpg'; // UPDATE IMAGE HERE
 import photo2 from '../assets/instagram/instagram_06.jpg'; // UPDATE IMAGE HERE
-import photo3 from '../assets/instagram/instagram_03.jpg'; // UPDATE IMAGE HERE
+import photo3 from '../assets/sweatshirts.jpeg'; // UPDATE IMAGE HERE
 // import photo3 from '../assets/instagram/news_01.jpg'; // UPDATE IMAGE HERE
 
 const STATIC_PRODUCTS = [
@@ -29,10 +29,10 @@ const STATIC_PRODUCTS = [
   },
   {
     id: 3,
-    title: 'Regular Tees', // UPDATE TITLE HERE
-    price: '€29.00', // UPDATE PRICE HERE
+    title: 'Sweatshirts', // UPDATE TITLE HERE
+    price: '€39.00', // UPDATE PRICE HERE (prázdne = cena sa nezobrazí)
     imageUrl: photo3, // UPDATE IMAGE HERE
-    url: '/sk/catalog', // UPDATE URL HERE
+    url: '/sk/catalog/sweatshirts', // UPDATE URL HERE
   },
 ];
 // ─────────────────────────────────────────────────────────────
@@ -58,7 +58,7 @@ function Card({product}) {
           <span className="np__badge">New</span>
           <div className="np__info">
             <p className="np__name">{product.title}</p>
-            <p className="np__price">{product.price}</p>
+            {product.price && <p className="np__price">{product.price}</p>}
             <span className="np__cta">{t.shop_now}</span>
           </div>
         </div>

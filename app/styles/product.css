@@ -51,6 +51,45 @@
   grid-gap: 0.75rem;
 }
 
+/* Farby + veľkosti (napr. svetre) – oddeliť od seba */
+.product-form--multi .product-options + .product-options {
+  margin-top: 28px;
+}
+
+/* Tooltip s názvom farby pri hoveri */
+.product-options--color .product-options-item {
+  position: relative;
+}
+
+.product-options--color .product-options-item[data-label]::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  padding: 5px 10px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  z-index: 5;
+}
+
+.product-options--color .product-options-item[data-label]:hover::after,
+.product-options--color .product-options-item[data-label]:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 /* product-status animation - off for now */
 .product-status {
   display: flex;
@@ -76,6 +115,21 @@
   position: absolute;
   inset: 0;
   pointer-events: none; /* aby hover neblikalo */
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: opacity;
+}
+
+.product-item .product-item-imageOverlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (hover: hover) {
+  .product-item:hover .product-item-imageOverlay {
+    opacity: 1;
+  }
 }
 
 .product-item-badge {
@@ -90,6 +144,54 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   padding: 5px 10px;
+}
+
+.product-item-colors {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px 5px 6px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 999px;
+  color: #fff;
+  pointer-events: none;
+}
+
+.product-item-colors__dots {
+  display: flex;
+}
+
+.product-item-colors__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  transition: margin 0.3s ease;
+}
+
+.product-item-colors__dot + .product-item-colors__dot {
+  margin-left: -4px;
+}
+
+@media (hover: hover) {
+  .product-item:hover .product-item-colors__dot + .product-item-colors__dot {
+    margin-left: 3px;
+  }
+}
+
+.product-item-colors__label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 .product-item {

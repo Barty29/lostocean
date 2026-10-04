@@ -89,6 +89,15 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
         ...MoneyCollectionItem
       }
     }
+    options(first: 3) {
+      name
+      optionValues {
+        name
+        swatch {
+          color
+        }
+      }
+    }
     collections(first: 5) {
       nodes {
         handle

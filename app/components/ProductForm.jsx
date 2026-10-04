@@ -2,6 +2,7 @@ import {Link, useNavigate} from 'react-router';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 import {useLocale} from '~/hooks/useLocale';
+import {isColorOption, sortColorValues} from '~/lib/colors';
 
 /**
  * @param {{
@@ -13,17 +14,34 @@ export function ProductForm({productOptions, selectedVariant}) {
   const navigate = useNavigate();
   const {open} = useAside();
   const {t} = useLocale();
+  const visibleOptions = productOptions.filter(
+    (option) => option.optionValues.length > 1,
+  );
+  // Väčšia medzera len keď má produkt farby aj veľkosti (napr. svetre, nie tašky)
+  const hasMultipleOptions = visibleOptions.length > 1;
+
   return (
-    <div className="product-form">
-      {productOptions.map((option) => {
-        // If there is only a single value in the option values, don't display the option
-        if (option.optionValues.length === 1) return null;
+    <div
+      className={`product-form${
+        hasMultipleOptions ? ' product-form--multi' : ''
+      }`}
+    >
+      {visibleOptions.map((option) => {
+        const isColor = isColorOption(option);
+        const values = isColor
+          ? sortColorValues(option.optionValues)
+          : option.optionValues;
 
         return (
-          <div className="product-options" key={option.name}>
+          <div
+            className={`product-options${
+              isColor ? ' product-options--color' : ''
+            }`}
+            key={option.name}
+          >
             {/* <h5>{option.name}</h5> */}
             <div className="product-options-grid">
-              {option.optionValues.map((value) => {
+              {values.map((value) => {
                 const {
                   name,
                   handle,
@@ -48,6 +66,8 @@ export function ProductForm({productOptions, selectedVariant}) {
                       preventScrollReset
                       replace
                       to={`/products/${handle}?${variantUriQuery}`}
+                      aria-label={isColor ? name : undefined}
+                      data-label={isColor ? name : undefined}
                       style={{
                         border: selected
                           ? '1px solid black'
@@ -71,6 +91,8 @@ export function ProductForm({productOptions, selectedVariant}) {
                         exists && !selected ? ' link' : ''
                       }`}
                       key={option.name + name}
+                      aria-label={isColor ? name : undefined}
+                      data-label={isColor ? name : undefined}
                       style={{
                         fontSize: '24px',
                         minWidth: '40px',
