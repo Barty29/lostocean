@@ -5,6 +5,7 @@ import {motion} from 'framer-motion';
 import {useVariantUrl} from '~/lib/variants';
 import {useLocale} from '~/hooks/useLocale';
 import {isColorOption, resolveColor, sortColorValues} from '~/lib/colors';
+import {getSalePrice} from '~/lib/sale';
 
 function getProductBadge(product) {
   const handles = product?.collections?.nodes?.map((c) => c.handle) ?? [];
@@ -38,7 +39,6 @@ function getColorValues(product) {
 }
 
 const MAX_DOTS = 4;
-
 /**
  * @param {{
  *   product:
@@ -55,6 +55,14 @@ export function ProductItem({product, loading}) {
   const img2 = product?.images?.nodes?.[1];
   const badge = getProductBadge(product);
   const colors = getColorValues(product);
+  const {
+    price,
+    compareAtPrice: compareAt,
+    percent: discount,
+  } = getSalePrice(
+    product.priceRange.minVariantPrice,
+    product.compareAtPriceRange?.minVariantPrice,
+  );
 
   return (
     <motion.div
@@ -69,6 +77,9 @@ export function ProductItem({product, loading}) {
       >
         <div className="product-item-imageWrap">
           {badge && <span className="product-item-badge">{badge}</span>}
+          {discount && (
+            <span className="product-item-sale">-{discount}%</span>
+          )}
           {/* <span className="product-item-badge">BADGE</span> */}
           {colors.length > 0 && (
             <div
@@ -116,7 +127,16 @@ export function ProductItem({product, loading}) {
 
         <div className="product-item-text">
           <h4>{product.title}</h4>
-          <Money data={product.priceRange.minVariantPrice} />
+          {discount ? (
+            <span className="product-item-price product-item-price--sale">
+              <s className="product-item-price__old">
+                <Money data={compareAt} />
+              </s>
+              <Money data={price} />
+            </span>
+          ) : (
+            <Money data={price} />
+          )}
         </div>
       </Link>
     </motion.div>

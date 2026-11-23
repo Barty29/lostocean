@@ -337,6 +337,12 @@ const TOP_SELLING_PRODUCTS_QUERY = `#graphql
         currencyCode
       }
     }
+    compareAtPriceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
     options(first: 3) {
       name
       optionValues {

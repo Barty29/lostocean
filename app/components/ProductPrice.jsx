@@ -1,4 +1,5 @@
 import {Money} from '@shopify/hydrogen';
+import {getSalePrice} from '~/lib/sale';
 
 /**
  * @param {{
@@ -6,7 +7,17 @@ import {Money} from '@shopify/hydrogen';
  *   compareAtPrice?: MoneyV2 | null;
  * }}
  */
-export function ProductPrice({price, compareAtPrice, view = 'product'}) {
+export function ProductPrice({
+  price: basePrice,
+  compareAtPrice: baseCompareAtPrice,
+  view = 'product',
+}) {
+  // V košíku Shopify zľavu prepočíta sám, akciu aplikujeme len na stránke produktu
+  const {price, compareAtPrice} =
+    view === 'product'
+      ? getSalePrice(basePrice, baseCompareAtPrice)
+      : {price: basePrice, compareAtPrice: baseCompareAtPrice};
+
   return (
     <div
       className={`product-price-${view === 'product' ? 'product' : 'cart'}`}

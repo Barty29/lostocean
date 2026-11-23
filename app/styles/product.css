@@ -146,6 +146,32 @@
   padding: 5px 10px;
 }
 
+/* Black Friday / zľava */
+.product-item-sale {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  background: #c8102e;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 5px 10px;
+}
+
+.product-item-price--sale {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.product-item-price__old {
+  opacity: 0.5;
+  font-size: 0.85em;
+}
+
 .product-item-colors {
   position: absolute;
   left: 10px;
